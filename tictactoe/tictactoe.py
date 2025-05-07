@@ -77,7 +77,7 @@ def result(board, action):
     # If action not in actions(board)
     if action not in actions(board):
         # raise exception
-        raise Exception
+        raise ValueError("Invalid action")
     # Else
     else:
         # Map action to the copy board and return itx = 
@@ -89,6 +89,9 @@ def winner(board):
     """
     
     # Assess the board to check if there are 3 consecutive O's or X's
+    for i in range(2):
+        for j in range(2):
+            board[i][j]
     # If there is winner, return winner
     # Else return None
 
