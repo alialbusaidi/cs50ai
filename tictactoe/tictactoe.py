@@ -3,6 +3,7 @@ Tic Tac Toe Player
 """
 
 import math
+from copy import deepcopy
 
 X = "X"
 O = "O"
@@ -67,16 +68,20 @@ def result(board, action):
     """
 
     # Create new board variables matrix a deep copy of existing
+    result_board = deepcopy(board)
 
     # Determine whos turn it is
+    turn_player = player(board)
 
     # Check if action is legal
     # If action not in actions(board)
+    if action not in actions(board):
         # raise exception
+        raise Exception
     # Else
+    else:
         # Map action to the copy board and return itx = 
-
-    raise NotImplementedError
+        result_board[action[0]][action[2]] = turn_player
 
 def winner(board):
     """
