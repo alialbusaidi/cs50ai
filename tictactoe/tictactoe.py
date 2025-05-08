@@ -89,45 +89,38 @@ def winner(board):
     """
     Returns the winner of the game, if there is one.
     """
-    # If game is not over, return None
-    if not terminal(board):
-        return None
+
+    # Initialize variable to store potential winner
+    won = None
     
-    else:
-        # Assess the board to check if there are 3 consecutive O's or X's
-        # 3 rows, 3 columns, and 2 diagnols, if count of player in any of them is 3!
-
-        # Initialize variable to store potential winner
-        won = None
+    # Check rows and columns
+    for i in range(3):
+        row_i = []
+        col_i = []
+        for j in range(3):
+            row_i.append(board[i][j])
+            col_i.append(board[j][i])
         
-        # Check rows and columns
-        for i in range(3):
-            row_i = []
-            col_i = []
-            for j in range(3):
-                row_i.append(board[i][j])
-                col_i.append(board[j][i])
-            
-            if row_i.count(O) == 3 or col_i.count(O) == 3:
-                won = O 
-            elif row_i.count(X) == 3 or col_i.count(X) == 3:
-                won = X
-            else:
-                continue
-            
-        # Check diognals
-        # Store diagonal lines
-        dia_1 = [board[0][0], board[1][1], board[2][2]]
-        dia_2 = [board[0][2], board[1][1], board[2][0]]
+        if row_i.count(O) == 3 or col_i.count(O) == 3:
+            won = O 
+        elif row_i.count(X) == 3 or col_i.count(X) == 3:
+            won = X
+        else:
+            continue
+        
+    # Check diognals
+    # Store diagonal lines
+    dia_1 = [board[0][0], board[1][1], board[2][2]]
+    dia_2 = [board[0][2], board[1][1], board[2][0]]
 
-        if dia_1.count(O) == 3 or dia_2.count(O) == 3:
-            won = O
+    if dia_1.count(O) == 3 or dia_2.count(O) == 3:
+        won = O
 
-        if dia_1.count(X) == 3 or dia_2.count(X) == 3:
-            won = X 
+    if dia_1.count(X) == 3 or dia_2.count(X) == 3:
+        won = X 
 
-        # Return winner, or None if no winner
-        return won
+    # Return winner, or None if no winner
+    return won
 
 
 def terminal(board):
