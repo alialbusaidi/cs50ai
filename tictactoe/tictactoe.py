@@ -151,12 +151,24 @@ def utility(board):
         return 0
 
 
+def max_value(board):
+    # v = - infinity
+
+    # If game is finished, give the utility 1, 0, or -1
+    if terminal(board):
+        return utility(board)
+
+    for action in actions(board):
+        v = max(v, min_value(result(board, action)))
+    
+    return v
+
+
 def minimax(board):
     """
     Returns the optimal action for the current player on the board.
     """
 
     # if terminal(board), return None
-
-
-    raise NotImplementedError
+    if terminal(board):
+        return None
