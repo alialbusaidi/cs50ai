@@ -104,13 +104,21 @@ def winner(board):
         
         if row_i.count(O) == 3 or col_i.count(O) == 3:
             won = O 
-        elif row_i.count(X) == 3 or col_i.count(X):
+        elif row_i.count(X) == 3 or col_i.count(X) == 3:
             won = X
         else:
             continue
         
     # Check diognals
+    # Store diagonal lines
+    dia_1 = [board[0][0], board[1][1], board[2][2]]
+    dia_2 = [board[0][2], board[1][1], board[2][0]]
 
+    if dia_1.count(O) == 3 or dia_2.count(O) == 3:
+        won = O 
+
+    if dia_1.count(X) == 3 or dia_2.count(X) == 3:
+        won = X 
 
     # Return winner, or None if no winner
     return won
