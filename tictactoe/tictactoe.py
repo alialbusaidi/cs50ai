@@ -9,6 +9,7 @@ X = "X"
 O = "O"
 EMPTY = None
 
+
 def initial_state():
     """
     Returns starting state of the board.
@@ -16,6 +17,7 @@ def initial_state():
     return [[EMPTY, EMPTY, EMPTY],
             [EMPTY, EMPTY, EMPTY],
             [EMPTY, EMPTY, EMPTY]]
+
 
 def player(board):
     """
@@ -39,6 +41,7 @@ def player(board):
 
     else:
         return O
+
 
 def actions(board):
     """
@@ -84,6 +87,7 @@ def result(board, action):
         result_board[action[0]][action[1]] = turn
 
     return result_board
+
 
 def winner(board):
     """
@@ -152,6 +156,7 @@ def utility(board):
     else:
         return 0
 
+
 def max_value(board):
     """
         Returns the optimal move for the maximizing player, by consiering the oponent's
@@ -169,6 +174,7 @@ def max_value(board):
     
     return v
 
+
 def min_value(board):
     """
     Returns the optimal move for the minimizing player, by consiering the oponent's
@@ -185,11 +191,12 @@ def min_value(board):
 
     return v
 
+
 def minimax(board):
     """
     Returns the optimal action for the current player on the board.
     """
-        # if terminal(board), return None
+    # if terminal(board), return None
     if terminal(board):
         return None
     
