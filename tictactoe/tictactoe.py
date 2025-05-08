@@ -91,39 +91,28 @@ def winner(board):
     # Assess the board to check if there are 3 consecutive O's or X's
     # 3 rows, 3 columns, and 2 diagnols, if count of player in any of them is 3!
 
-    # Check rows
+    # Initialize variable to store potential winner
+    won = None
+
+    # Check rows and columns
     for i in range(3):
-        row = []
+        row_i = []
+        col_i = []
         for j in range(3):
-            row.append(board[i][j])
+            row_i.append(board[i][j])
+            col_i.append(board[j][i])
         
-        if row.count(O) == 3:
-            return O 
-        elif row.count(X) == 3:
-            return X
+        if row_i.count(O) == 3 or col_i.count(O) == 3:
+            won = O 
+        elif row_i.count(X) == 3 or col_i.count(X):
+            won = X
         else:
             continue
+        
+    # Check diognals
 
-    # Check columns
-    for j in range(3):
-        col = []
-        for i in range(3):
-            col.append(board[i][j])
-
-        if col.count(O) == 3:
-            return O 
-        elif col.count(X) == 3:
-            return X
-        else:
-            continue
-
-
-
-    # If there is winner, return winner
-    # Else return None
-
-
-    raise NotImplementedError
+    # Return winner, or None if no winner
+    return won
 
 
 def terminal(board):
