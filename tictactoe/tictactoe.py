@@ -152,7 +152,12 @@ def utility(board):
 
 
 def max_value(board):
-    # v = - infinity
+    """
+        Returns the optimal move for the maximizing player, by consiering the oponent's
+        optimal moves resulting from each possible action player currently has.
+    """
+    # Set initial value 
+    v = - math.inf
 
     # If game is finished, give the utility 1, 0, or -1
     if terminal(board):
@@ -162,6 +167,20 @@ def max_value(board):
         v = max(v, min_value(result(board, action)))
     
     return v
+
+def min_value(board):
+    """
+    Returns the optimal move for the minimizing player, by consiering the oponent's
+    optimal moves resulting from each possible action player currently has.
+
+    """
+    v = math.inf
+
+    if terminal(board):
+        return utility(board)
+    
+    for action in actions(board):
+        v = min(v, max_value(result(board, action)))
 
 
 def minimax(board):
