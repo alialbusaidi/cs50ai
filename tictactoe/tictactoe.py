@@ -71,7 +71,7 @@ def result(board, action):
     result_board = deepcopy(board)
 
     # Determine whos turn it is
-    turn_player = player(board)
+    turn = player(board)
 
     # Check if action is legal
     # If action not in actions(board)
@@ -81,7 +81,7 @@ def result(board, action):
     # Else
     else:
         # Map action to the copy board and return itx = 
-        result_board[action[0]][action[2]] = turn_player
+        result_board[action[0]][action[2]] = turn
 
 def winner(board):
     """
@@ -89,9 +89,36 @@ def winner(board):
     """
     
     # Assess the board to check if there are 3 consecutive O's or X's
-    for i in range(2):
-        for j in range(2):
-            board[i][j]
+    # 3 rows, 3 columns, and 2 diagnols, if count of player in any of them is 3!
+
+    # Check rows
+    for i in range(3):
+        row = []
+        for j in range(3):
+            row.append(board[i][j])
+        
+        if row.count(O) == 3:
+            return O 
+        elif row.count(X) == 3:
+            return X
+        else:
+            continue
+
+    # Check columns
+    for j in range(3):
+        col = []
+        for i in range(3):
+            col.append(board[i][j])
+
+        if col.count(O) == 3:
+            return O 
+        elif col.count(X) == 3:
+            return X
+        else:
+            continue
+
+
+
     # If there is winner, return winner
     # Else return None
 
