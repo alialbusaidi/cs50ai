@@ -81,7 +81,9 @@ def result(board, action):
     # Else
     else:
         # Map action to the copy board and return itx = 
-        result_board[action[0]][action[2]] = turn
+        result_board[action[0]][action[1]] = turn
+
+    return result_board
 
 def winner(board):
     """
@@ -150,7 +152,6 @@ def utility(board):
     else:
         return 0
 
-
 def max_value(board):
     """
         Returns the optimal move for the maximizing player, by consiering the oponent's
@@ -182,6 +183,7 @@ def min_value(board):
     for action in actions(board):
         v = min(v, max_value(result(board, action)))
 
+    return v
 
 def minimax(board):
     """
