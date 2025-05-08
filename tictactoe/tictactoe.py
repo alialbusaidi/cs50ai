@@ -35,7 +35,7 @@ def player(board):
     if terminal(board):
         return None
     
-    # Assuming, or O has just played,
+    # If initial state, or or it is X's turn,
     if x_count == o_count:
         return X
 
@@ -57,12 +57,9 @@ def actions(board):
     for i in range(3):
         for j in range(3):
             if board[i][j] is None:
-                possible_actions.add(i, j)
+                possible_actions.add((i, j))
     
-    if not len(possible_actions) == 0:
-        return possible_actions
-    else:
-        return set()
+    return possible_actions
 
 
 def result(board, action):
@@ -81,9 +78,8 @@ def result(board, action):
     if action not in actions(board):
         # raise exception
         raise ValueError("Invalid action")
-    # Else
     else:
-        # Map action to the copy board and return itx = 
+        # Map action to the resulting board and return it 
         result_board[action[0]][action[1]] = turn
 
     return result_board
@@ -93,41 +89,45 @@ def winner(board):
     """
     Returns the winner of the game, if there is one.
     """
+    # If game is not over, return None
+    if not terminal(board):
+        return None
     
-    # Assess the board to check if there are 3 consecutive O's or X's
-    # 3 rows, 3 columns, and 2 diagnols, if count of player in any of them is 3!
+    else:
+        # Assess the board to check if there are 3 consecutive O's or X's
+        # 3 rows, 3 columns, and 2 diagnols, if count of player in any of them is 3!
 
-    # Initialize variable to store potential winner
-    won = None
-
-    # Check rows and columns
-    for i in range(3):
-        row_i = []
-        col_i = []
-        for j in range(3):
-            row_i.append(board[i][j])
-            col_i.append(board[j][i])
+        # Initialize variable to store potential winner
+        won = None
         
-        if row_i.count(O) == 3 or col_i.count(O) == 3:
-            won = O 
-        elif row_i.count(X) == 3 or col_i.count(X) == 3:
-            won = X
-        else:
-            continue
-        
-    # Check diognals
-    # Store diagonal lines
-    dia_1 = [board[0][0], board[1][1], board[2][2]]
-    dia_2 = [board[0][2], board[1][1], board[2][0]]
+        # Check rows and columns
+        for i in range(3):
+            row_i = []
+            col_i = []
+            for j in range(3):
+                row_i.append(board[i][j])
+                col_i.append(board[j][i])
+            
+            if row_i.count(O) == 3 or col_i.count(O) == 3:
+                won = O 
+            elif row_i.count(X) == 3 or col_i.count(X) == 3:
+                won = X
+            else:
+                continue
+            
+        # Check diognals
+        # Store diagonal lines
+        dia_1 = [board[0][0], board[1][1], board[2][2]]
+        dia_2 = [board[0][2], board[1][1], board[2][0]]
 
-    if dia_1.count(O) == 3 or dia_2.count(O) == 3:
-        won = O 
+        if dia_1.count(O) == 3 or dia_2.count(O) == 3:
+            won = O
 
-    if dia_1.count(X) == 3 or dia_2.count(X) == 3:
-        won = X 
+        if dia_1.count(X) == 3 or dia_2.count(X) == 3:
+            won = X 
 
-    # Return winner, or None if no winner
-    return won
+        # Return winner, or None if no winner
+        return won
 
 
 def terminal(board):
@@ -156,6 +156,20 @@ def utility(board):
     else:
         return 0
 
+
+def minimax(board):
+    """
+    Returns the optimal action for the current player on the board.
+    """
+    # if terminal(board), return None
+    if terminal(board):
+        return None
+    
+    elif player(board) == X:
+        return max_value(board)
+    
+    else:
+        return min_value(board)
 
 def max_value(board):
     """
@@ -190,18 +204,3 @@ def min_value(board):
         v = min(v, max_value(result(board, action)))
 
     return v
-
-
-def minimax(board):
-    """
-    Returns the optimal action for the current player on the board.
-    """
-    # if terminal(board), return None
-    if terminal(board):
-        return None
-    
-    elif player(board) == X:
-        return max_value(board)
-    
-    else:
-        return min_value(board)
