@@ -111,6 +111,7 @@ def winner(board):
         
     # Check diognals
 
+
     # Return winner, or None if no winner
     return won
 
@@ -119,12 +120,11 @@ def terminal(board):
     """
     Returns True if game is over, False otherwise.
     """
+    if winner(board) or len(actions(board)) == 0:
+        return True
+    else:
+        return False
 
-    # If winner, return true
-
-    # Elif actions(board) is None, return true
-
-    # Else, return False
 
     raise NotImplementedError
 
