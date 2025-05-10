@@ -128,9 +128,9 @@ def terminal(board):
     Returns True if game is over, False otherwise.
     """
     if winner(board) is not None or not actions(board):
-        return False
-    else:
         return True
+    else:
+        return False
 
 
 def utility(board):
@@ -161,19 +161,19 @@ def minimax(board):
     best_move = None
     
     if player(board) == X:
-        best_value = - math.info  
+        best_value = -math.inf
         for action in actions(board):
-            value = max_value(result(board, action))
+            value = min_value(result(board, action))
             if value > best_value:
-                best_value = value 
+                best_value = value
                 best_move = action
         return best_move
     
     else:
         best_value = math.inf
         for action in actions(board):
-            value = min_value(result(board, action))
-            if value > best_value:
+            value = max_value(result(board, action))
+            if value < best_value:
                 best_value = value
                 best_move = action
         return best_move
