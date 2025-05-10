@@ -127,10 +127,10 @@ def terminal(board):
     """
     Returns True if game is over, False otherwise.
     """
-    if winner(board) or len(actions(board)) == 0:
-        return True
-    else:
+    if winner(board) is not None or not actions(board):
         return False
+    else:
+        return True
 
 
 def utility(board):
@@ -158,15 +158,29 @@ def minimax(board):
     if terminal(board):
         return None
     
-    elif player(board) == X:
-        return max_value(board)
+    best_move = None
+    
+    if player(board) == X:
+        best_value = - math.info  
+        for action in actions(board):
+            value = max_value(result(board, action))
+            if value > best_value:
+                best_value = value 
+                best_move = action
+        return best_move
     
     else:
-        return min_value(board)
+        best_value = math.inf
+        for action in actions(board):
+            value = min_value(result(board, action))
+            if value > best_value:
+                best_value = value
+                best_move = action
+        return best_move
 
 def max_value(board):
     """
-        Returns the optimal move for the maximizing player, by consiering the oponent's
+        Returns the value of optimal move for the maximizing player, by consiering the oponent's
         optimal moves resulting from each possible action player currently has.
     """
     # Set initial value 
@@ -184,7 +198,7 @@ def max_value(board):
 
 def min_value(board):
     """
-    Returns the optimal move for the minimizing player, by consiering the oponent's
+    Returns the value of optimal move for the minimizing player, by consiering the oponent's
     optimal moves resulting from each possible action player currently has.
 
     """
