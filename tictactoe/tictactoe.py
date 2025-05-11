@@ -50,9 +50,6 @@ def actions(board):
     # Initialize empty set
     possible_actions = set()
 
-    if terminal(board):
-        return set()
-
     # Loop through cells and add cells, (i, j), that have None value
     for i in range(3):
         for j in range(3):
@@ -127,10 +124,14 @@ def terminal(board):
     """
     Returns True if game is over, False otherwise.
     """
-    if winner(board) is not None or not actions(board):
+    if winner(board) is not None:
         return True
-    else:
-        return False
+    
+    for row in board:
+        if EMPTY in row:
+            return False
+    
+    return True
 
 
 def utility(board):
