@@ -202,9 +202,7 @@ class MinesweeperAI():
 
         # 3) add a new sentence to the AI's knowledge base 
         #    based on the value of `cell` and `count`
-
             # Find surrounding cells
-        
         surround_cells = set()
             # Loop over all cells
         for i in range(cell[0] - 1, cell[0] + 2):
@@ -215,20 +213,25 @@ class MinesweeperAI():
                     continue
                 
                 # iteration is within bound of board
-                if 0 <= i <= self.height and 0 <= j <= self.width:
+                if 0 <= i < self.height and 0 <= j < self.width:
                     surround_cells.add((i, j))
-        
-        cells_count = Minesweeper.nearby_mines(cell) 
+
+        # Filter known safes and mines from surrounding cells
+        surround_cells -= self.safes
+        surround_cells -= self.mines
 
         # Create new sentence with surrounding cells and count as input
-        s0 = Sentence(surround_cells, cells_count)
+        s0 = Sentence(surround_cells, count)
 
-        for cell in s0.cells:
-            if cell in self.safes:
-                self.mark_safe(cell)
-            if cell in self.mines:
-                self.mark_mine(cell)
+        for sentence in self.knowledge:
+            new_safes |= sentence.known_safes()
+            new_mines |= sentence.known_mines()
 
+        for cell in new_safes:
+            self.mark_safe(cell)
+        for cell in new_mines:
+            self.mark_mine(cell)
+        
         self.knowledge.append(s0)
 
         # 4) mark any additional cells as safe or as mines
@@ -236,8 +239,7 @@ class MinesweeperAI():
         
         for s1 in self.knowledge:
             for s2 in self.knowledge:
-                if s1 is s2:
-                    continue
+                if s1 is s2: continue
                 else:
                     s1_cells = s1.cells
                     s1_count = s1.count
@@ -246,20 +248,19 @@ class MinesweeperAI():
                     if s2_cells.issubset(s1_cells):
                         s3_cells = s1_cells - s2_cells
                         s3_count = s1_count - s2_count
-                        s3 = Sentence(s3_cells, s3_count)
-                        self.knowledge.add(s3)
+                        if s3_cells:
+                            s3 = Sentence(s3_cells, s3_count)
+                            self.knowledge.append(s3)
                     
                     elif s1_cells.issubset(s2_cells):
                         s3_cells = s2_cells - s1_cells
                         s3_count = s2_count - s1_count
-                        s3 = Sentence(s3_cells, s3_count)
-                        self.knowledge.add(s3)
+                        if s3_cells and s3 not in self.knowledge:
+                            s3 = Sentence(s3_cells, s3_count)
+                            self.knowledge.append(s3)
                     else:
                         continue
-        
-        for s in self.knowledge:
-            self.knowledge.add(s.known_safes)
-            self.knowledge.add(s.known_mines)
+
 
 
     def make_safe_move(self):
