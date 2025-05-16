@@ -222,6 +222,9 @@ class MinesweeperAI():
 
         # Create new sentence with surrounding cells and count as input
         s0 = Sentence(surround_cells, count)
+    
+        # Add new sentence to knowledge
+        self.knowledge.append(s0)
 
         for sentence in self.knowledge:
             new_safes |= sentence.known_safes()
@@ -232,34 +235,26 @@ class MinesweeperAI():
         for cell in new_mines:
             self.mark_mine(cell)
         
-        self.knowledge.append(s0)
+        
 
         # 4) mark any additional cells as safe or as mines
-        #    if it can be concluded based on the AI's knowledge base
-        
+        #    if it can be concluded based on the AI's knowledge base   
         for s1 in self.knowledge:
             for s2 in self.knowledge:
                 if s1 is s2: continue
-                else:
-                    s1_cells = s1.cells
-                    s1_count = s1.count
-                    s2_cells = s2.cells
-                    s2_count = s2.count
-                    if s2_cells.issubset(s1_cells):
-                        s3_cells = s1_cells - s2_cells
-                        s3_count = s1_count - s2_count
-                        if s3_cells:
-                            s3 = Sentence(s3_cells, s3_count)
-                            self.knowledge.append(s3)
-                    
-                    elif s1_cells.issubset(s2_cells):
-                        s3_cells = s2_cells - s1_cells
-                        s3_count = s2_count - s1_count
+                elif s2.cells.issubset(s1.cells):
+                        s3_cells = s1.cells - s2.cells
+                        s3_count = s1.count - s2.count
+                        s3 = Sentence(s3_cells, s3_count)
                         if s3_cells and s3 not in self.knowledge:
-                            s3 = Sentence(s3_cells, s3_count)
-                            self.knowledge.append(s3)
-                    else:
-                        continue
+                            self.knowledge.append(s3)     
+                elif s1.cells.issubset(s2.cells):
+                    s3_cells = s2.cells - s1.cells
+                    s3_count = s2.count - s1.count
+                    if s3_cells and s3 not in self.knowledge:
+                        s3 = Sentence(s3_cells, s3_count)
+                        self.knowledge.append(s3)
+                else: continue
 
 
 
