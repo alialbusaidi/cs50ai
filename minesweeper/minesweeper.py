@@ -226,36 +226,47 @@ class MinesweeperAI():
         # Add new sentence to knowledge
         self.knowledge.append(s0)
 
-        for sentence in self.knowledge:
-            new_safes |= sentence.known_safes()
-            new_mines |= sentence.known_mines()
+        while True:
+            delta = False
 
-        for cell in new_safes:
-            self.mark_safe(cell)
-        for cell in new_mines:
-            self.mark_mine(cell)
-        
-        
+            new_safes = set()
+            new_mines = set()
 
-        # 4) mark any additional cells as safe or as mines
-        #    if it can be concluded based on the AI's knowledge base   
-        for s1 in self.knowledge:
-            for s2 in self.knowledge:
-                if s1 is s2: continue
-                elif s2.cells.issubset(s1.cells):
-                        s3_cells = s1.cells - s2.cells
-                        s3_count = s1.count - s2.count
-                        s3 = Sentence(s3_cells, s3_count)
+            for sentence in self.knowledge:
+                new_safes |= sentence.known_safes()
+                new_mines |= sentence.known_mines()
+
+            if new_safes or new_mines: delta = True
+
+            for c in new_safes:
+                self.mark_safe(c)
+            for c in new_mines:
+                self.mark_mine(c)
+            
+            # 4) mark any additional cells as safe or as mines
+            #    if it can be concluded based on the AI's knowledge base   
+            for s1 in self.knowledge:
+                for s2 in self.knowledge:
+                    if s1 is s2: continue
+                    elif s2.cells.issubset(s1.cells):
+                            s3_cells = s1.cells - s2.cells
+                            s3_count = s1.count - s2.count
+                            s3 = Sentence(s3_cells, s3_count)
+                            if s3_cells and s3 not in self.knowledge:
+                                self.knowledge.append(s3)
+                                delta = True     
+                    elif s1.cells.issubset(s2.cells):
+                        s3_cells = s2.cells - s1.cells
+                        s3_count = s2.count - s1.count
                         if s3_cells and s3 not in self.knowledge:
-                            self.knowledge.append(s3)     
-                elif s1.cells.issubset(s2.cells):
-                    s3_cells = s2.cells - s1.cells
-                    s3_count = s2.count - s1.count
-                    if s3_cells and s3 not in self.knowledge:
-                        s3 = Sentence(s3_cells, s3_count)
-                        self.knowledge.append(s3)
-                else: continue
+                            s3 = Sentence(s3_cells, s3_count)
+                            self.knowledge.append(s3)
+                            delta = True
+                    else: continue
 
+            self.knowledge = [s for s in self.knowledge if s.cells]
+
+            if not delta: break
 
 
     def make_safe_move(self):
