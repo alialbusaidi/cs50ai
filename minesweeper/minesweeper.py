@@ -281,9 +281,8 @@ class MinesweeperAI():
         and self.moves_made, but should not modify any of those values.
         """
         availble_moves = list(self.safes - self.moves_made)
-        move = random.choice(availble_moves)
         if not availble_moves: return None
-        else: return move
+        else: return random.choice(availble_moves)
 
 
 
