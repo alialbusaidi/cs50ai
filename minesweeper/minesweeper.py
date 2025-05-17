@@ -203,7 +203,7 @@ class MinesweeperAI():
         # 3) add a new sentence to the AI's knowledge base 
         #    based on the value of `cell` and `count`
             # Find surrounding cells
-        surround_cells = set()
+        neighors = set()
             # Loop over all cells
         for i in range(cell[0] - 1, cell[0] + 2):
             for j in range(cell[1] - 1, cell[1] + 2):
@@ -214,16 +214,16 @@ class MinesweeperAI():
                 
                 # iteration is within bound of board
                 if 0 <= i < self.height and 0 <= j < self.width:
-                    surround_cells.add((i, j))
+                    neighors.add((i, j))
 
 
-        # Filter known safes and mines from surrounding cells
-        surround_cells -= self.safes
-        surround_cells -= self.mines
-        updated_count = len(surround_cells & self.mines)
+        known = neighors & self.mines
+        unknown = neighors - self.safes - self.mines
+
+        updated_count = count - len(known)
 
         # Create new sentence with surrounding cells and count as input
-        s0 = Sentence(surround_cells, updated_count)
+        s0 = Sentence(neighors, updated_count)
     
         # Add new sentence to knowledge
         self.knowledge.append(s0)
@@ -280,10 +280,10 @@ class MinesweeperAI():
         This function may use the knowledge in self.mines, self.safes
         and self.moves_made, but should not modify any of those values.
         """
-        move = random.choice(list(self.safes))
-        if move not in self.moves_made:
-            return move
-        else: return None
+        availble_moves = list(self.safes - self.moves_made)
+        move = random.choice(availble_moves)
+        if not availble_moves: return None
+        else: return move
 
 
 
@@ -294,10 +294,13 @@ class MinesweeperAI():
             1) have not already been chosen, and
             2) are not known to be mines
         """
-        i = random.randrange(self.height)
-        j = random.randrange(self.width)
-        move = (i, j)
-        if move in self.moves_made or move in self.mines:
-            return None
-        else: return move
+        all_moves = set()
+        for i in range(self.height):
+            for j in range(self.width):
+                all_moves.add((i,j))
+
+        legal_moves = list(all_moves - self.moves_made - self.mines)
+
+        if not legal_moves: return None
+        else: return random.choice(legal_moves)
             
