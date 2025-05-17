@@ -260,8 +260,8 @@ class MinesweeperAI():
                     elif s1.cells.issubset(s2.cells):
                         s3_cells = s2.cells - s1.cells
                         s3_count = s2.count - s1.count
+                        s3 = Sentence(s3_cells, s3_count)
                         if s3_cells and s3 not in self.knowledge:
-                            s3 = Sentence(s3_cells, s3_count)
                             self.knowledge.append(s3)
                             delta = True
                     else: continue
@@ -280,12 +280,11 @@ class MinesweeperAI():
         This function may use the knowledge in self.mines, self.safes
         and self.moves_made, but should not modify any of those values.
         """
-        
-        while True:
-            move = random.choice(list(self.safes))
-            if move not in self.moves_made:
-                return move
-            else: continue
+        move = random.choice(list(self.safes))
+        if move not in self.moves_made:
+            return move
+        else: return None
+
 
 
     def make_random_move(self):
@@ -295,11 +294,10 @@ class MinesweeperAI():
             1) have not already been chosen, and
             2) are not known to be mines
         """
-        while True:
-            i = random.randrange(self.height)
-            j = random.randrange(self.width)
-            move = (i, j)
-            if move in self.moves_made or move in self.mines:
-                continue
-            else: return move
+        i = random.randrange(self.height)
+        j = random.randrange(self.width)
+        move = (i, j)
+        if move in self.moves_made or move in self.mines:
+            return None
+        else: return move
             
