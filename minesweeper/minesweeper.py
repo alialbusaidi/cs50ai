@@ -216,12 +216,14 @@ class MinesweeperAI():
                 if 0 <= i < self.height and 0 <= j < self.width:
                     surround_cells.add((i, j))
 
+
         # Filter known safes and mines from surrounding cells
         surround_cells -= self.safes
         surround_cells -= self.mines
+        updated_count = len(surround_cells & self.mines)
 
         # Create new sentence with surrounding cells and count as input
-        s0 = Sentence(surround_cells, count)
+        s0 = Sentence(surround_cells, updated_count)
     
         # Add new sentence to knowledge
         self.knowledge.append(s0)
@@ -280,8 +282,6 @@ class MinesweeperAI():
         """
         
         while True:
-            if len(self.safes) == 0:
-                return None
             move = random.choice(list(self.safes))
             if move not in self.moves_made:
                 return move
