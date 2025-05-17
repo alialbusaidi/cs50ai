@@ -223,7 +223,7 @@ class MinesweeperAI():
         updated_count = count - len(known)
 
         # Create new sentence with surrounding cells and count as input
-        s0 = Sentence(neighors, updated_count)
+        s0 = Sentence(unknown, updated_count)
     
         # Add new sentence to knowledge
         self.knowledge.append(s0)
