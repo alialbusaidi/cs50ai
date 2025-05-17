@@ -95,14 +95,11 @@ class Sentence():
         self.cells = set(cells)
         self.count = count
 
-
     def __eq__(self, other):
         return self.cells == other.cells and self.count == other.count
 
-
     def __str__(self):
         return f"{self.cells} = {self.count}"
-
 
     def known_mines(self):
         """
@@ -129,7 +126,6 @@ class Sentence():
         if cell in self.cells:
             self.cells.remove(cell)
             self.count -= 1
-
 
     def mark_safe(self, cell):
         """
@@ -202,9 +198,9 @@ class MinesweeperAI():
 
         # 3) add a new sentence to the AI's knowledge base 
         #    based on the value of `cell` and `count`
-            # Find surrounding cells
+        # Find surrounding cells
         neighors = set()
-            # Loop over all cells
+        # Loop over all cells
         for i in range(cell[0] - 1, cell[0] + 2):
             for j in range(cell[1] - 1, cell[1] + 2):
 
@@ -215,7 +211,6 @@ class MinesweeperAI():
                 # iteration is within bound of board
                 if 0 <= i < self.height and 0 <= j < self.width:
                     neighors.add((i, j))
-
 
         known = neighors & self.mines
         unknown = neighors - self.safes - self.mines
@@ -238,7 +233,8 @@ class MinesweeperAI():
                 new_safes |= sentence.known_safes()
                 new_mines |= sentence.known_mines()
 
-            if new_safes or new_mines: delta = True
+            if new_safes or new_mines: 
+                delta = True
 
             for c in new_safes:
                 self.mark_safe(c)
@@ -249,14 +245,15 @@ class MinesweeperAI():
             #    if it can be concluded based on the AI's knowledge base   
             for s1 in self.knowledge:
                 for s2 in self.knowledge:
-                    if s1 is s2: continue
+                    if s1 is s2: 
+                        continue
                     elif s2.cells.issubset(s1.cells):
-                            s3_cells = s1.cells - s2.cells
-                            s3_count = s1.count - s2.count
-                            s3 = Sentence(s3_cells, s3_count)
-                            if s3_cells and s3 not in self.knowledge:
-                                self.knowledge.append(s3)
-                                delta = True     
+                        s3_cells = s1.cells - s2.cells
+                        s3_count = s1.count - s2.count
+                        s3 = Sentence(s3_cells, s3_count)
+                        if s3_cells and s3 not in self.knowledge:
+                            self.knowledge.append(s3)
+                            delta = True     
                     elif s1.cells.issubset(s2.cells):
                         s3_cells = s2.cells - s1.cells
                         s3_count = s2.count - s1.count
@@ -264,12 +261,13 @@ class MinesweeperAI():
                         if s3_cells and s3 not in self.knowledge:
                             self.knowledge.append(s3)
                             delta = True
-                    else: continue
+                    else: 
+                        continue
 
             self.knowledge = [s for s in self.knowledge if s.cells]
 
-            if not delta: break
-
+            if not delta: 
+                break
 
     def make_safe_move(self):
         """
@@ -281,10 +279,10 @@ class MinesweeperAI():
         and self.moves_made, but should not modify any of those values.
         """
         availble_moves = list(self.safes - self.moves_made)
-        if not availble_moves: return None
-        else: return random.choice(availble_moves)
-
-
+        if not availble_moves: 
+            return None
+        else: 
+            return random.choice(availble_moves)
 
     def make_random_move(self):
         """
@@ -300,6 +298,8 @@ class MinesweeperAI():
 
         legal_moves = list(all_moves - self.moves_made - self.mines)
 
-        if not legal_moves: return None
-        else: return random.choice(legal_moves)
+        if not legal_moves: 
+            return None
+        else: 
+            return random.choice(legal_moves)
             
