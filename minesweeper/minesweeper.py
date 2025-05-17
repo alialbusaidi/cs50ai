@@ -280,6 +280,8 @@ class MinesweeperAI():
         """
         
         while True:
+            if len(self.safes) == 0:
+                return None
             move = random.choice(list(self.safes))
             if move not in self.moves_made:
                 return move
