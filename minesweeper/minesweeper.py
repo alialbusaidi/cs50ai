@@ -294,7 +294,7 @@ class MinesweeperAI():
         all_moves = set()
         for i in range(self.height):
             for j in range(self.width):
-                all_moves.add((i,j))
+                all_moves.add((i, j))
 
         legal_moves = list(all_moves - self.moves_made - self.mines)
 
