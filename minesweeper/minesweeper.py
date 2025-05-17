@@ -280,8 +280,8 @@ class MinesweeperAI():
         """
         
         while True:
-            move = random.choice(self.safes.cells)
-            if move not in moves_made:
+            move = random.choice(list(self.safes))
+            if move not in self.moves_made:
                 return move
             else: continue
 
@@ -293,4 +293,11 @@ class MinesweeperAI():
             1) have not already been chosen, and
             2) are not known to be mines
         """
-        raise NotImplementedError
+        while True:
+            i = random.randrange(self.height)
+            j = random.randrange(self.width)
+            move = (i, j)
+            if move in self.moves_made or move in self.mines:
+                continue
+            else: return move
+            
