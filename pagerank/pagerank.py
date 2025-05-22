@@ -57,6 +57,17 @@ def transition_model(corpus, page, damping_factor):
     linked to by `page`. With probability `1 - damping_factor`, choose
     a link at random chosen from all pages in the corpus.
     """
+
+    # Get all links
+    # Get links on current page according to corpus dictionary
+
+    # Use random module functions to iterate over pages (links) and calculate:
+    # 1. Probablity of that page being next by (damping factor within page links)
+    # 2. Probabity of all pages according to 1 - damping factor
+    # 3. Compile total probability distribution in dictionary with page names as keys and probability as values
+
+    # Return probablity distribution
+    
     raise NotImplementedError
 
 
