@@ -102,6 +102,30 @@ def sample_pagerank(corpus, damping_factor, n):
     their estimated PageRank value (a value between 0 and 1). All
     PageRank values should sum to 1.
     """
+
+    # Initialize dictionary dictionary to store PageRanks
+    page_ranks =  { page : 0 for page in corpus}
+
+    # Store all pages in list variable
+    pages = list(page_ranks.keys())
+
+    # Initialize dictionary to store page counts
+    page_counts = dict()
+
+    # Choose ranom page to start from, and increment count
+    current_page = random.choice(pages)
+    page_counts[current_page] += 1
+
+    
+        
+
+    # Count the instnaces of each page
+
+    # Calculate the rank based on count/n and add to page_ranks
+ 
+    # Return page_rank
+    return page_ranks
+
     raise NotImplementedError
 
 
