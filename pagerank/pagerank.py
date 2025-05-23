@@ -68,12 +68,13 @@ def transition_model(corpus, page, damping_factor):
     for p in corpus:
         probability_distribution[p] = 0
 
-    # Get links on current page according to corpus dictionary
+    # Get set of links on current page according to corpus
     current_links = corpus[page]
+
     # Get number of links in current page
     num_links = len(current_links)
 
-    # If corpus[page] doesn't have links, then choose from corpus equally likely. Assume len(corpus[empty_page]) == 0
+    # If current page doesn't have links, then choose from corpus equally likely. Assume len(corpus[empty_page]) == 0
     if num_links == 0 or current_links == {''}:
         for key in probability_distribution:
             probability_distribution[key] = 1 / total_pages
@@ -83,9 +84,9 @@ def transition_model(corpus, page, damping_factor):
     for link in current_links:
         probability_distribution[link] = damping_factor / num_links
 
-    # 2. Probabity of all pages according to 1 - damping factor
+    # Assign (increase) Probabity of all pages according to 1 - damping_factor
     for p in corpus:
-        probability_distribution[p] += (1 - damping_factor) / total_page
+        probability_distribution[p] += (1 - damping_factor) / total_pages
 
     # Return probablity distribution
     return probability_distribution
