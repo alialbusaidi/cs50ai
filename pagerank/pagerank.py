@@ -75,9 +75,10 @@ def transition_model(corpus, page, damping_factor):
     num_links = len(current_links)
 
     # If current page doesn't have links, then choose from corpus equally likely. Assume len(corpus[empty_page]) == 0
-    if num_links == 0 or current_links == {''}:
+    if current_links == set():
         for key in probability_distribution:
             probability_distribution[key] = 1 / total_pages
+        
         return probability_distribution
     
     # Assign probability of links in current page according to damping_factor
