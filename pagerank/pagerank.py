@@ -159,8 +159,8 @@ def iterate_pagerank(corpus, damping_factor):
                 links.add(i)
                 NumLinks += 1
     
-
-
+    for page in corpus:
+        iterate_pr[page] = ((1 - d) / N) + ( d * 
         
 
 
