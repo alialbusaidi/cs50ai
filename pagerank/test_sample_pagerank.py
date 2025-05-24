@@ -14,4 +14,6 @@ sample_pr = sample_pagerank(corpus, damping_factor, n)
 
 print(f"Probability distribution of 1.html: {distribution}")
 print(f"Sum of distribution = {distribution_sum}")
+print()
 print(f"Sample PageRank: {sample_pr}")
+print("Sample sum:", sum(sample_pr.values()))
