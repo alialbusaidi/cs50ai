@@ -103,10 +103,10 @@ def sample_pagerank(corpus, damping_factor, n):
     """
 
     # Initialize dictionary dictionary to store PageRanks
-    page_ranks =  { page : 0 for page in corpus}
+    sample_pr =  { page : 0 for page in corpus}
 
     # Store all pages in list variable
-    pages = list(page_ranks)
+    pages = list(sample_pr)
 
     # Initialize dictionary to store page counts
     page_counts = { page : 0 for page in corpus}
@@ -123,12 +123,12 @@ def sample_pagerank(corpus, damping_factor, n):
         current_page = random.choices(links, weights, k=1)[0]
         page_counts[current_page] += 1
 
-    # Calculate the rank based on count/n and store in page_ranks
+    # Calculate the rank based on count/n and store in sample_pr
     for page in corpus:
-        page_ranks[page] = page_counts[page] / n
+        sample_pr[page] = page_counts[page] / n
  
     # Return page_rank
-    return page_ranks
+    return sample_pr
 
 def iterate_pagerank(corpus, damping_factor):
     """
@@ -139,7 +139,30 @@ def iterate_pagerank(corpus, damping_factor):
     their estimated PageRank value (a value between 0 and 1). All
     PageRank values should sum to 1.
     """
-    raise NotImplementedError
+
+    # Initialize a dictionary with page names as keys, and initial values of 1 / N, N being number of pages
+    iterate_pr = { page : 1 / N for page in corpus }
+
+    # Store number of total pages in corpus
+    N = len(corpus)
+
+    # Initialize Links to be empty, and NumLinks to be 0
+    links = set()
+    num_links = 0
+
+    # Identify pages with links to current page, store them, and their count
+    for p in corpus:
+        for i in corpus:
+            if p == i:
+                continue
+            elif p in corpus[i]:
+                links.add(i)
+                NumLinks += 1
+    
+
+
+        
+
 
 
 if __name__ == "__main__":
