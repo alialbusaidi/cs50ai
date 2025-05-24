@@ -66,7 +66,7 @@ def transition_model(corpus, page, damping_factor):
 
     # Loop over all pages to create keys in the distribution, and initialize all probabities to 0.
     for p in corpus:
-        probability_distribution[p] = 1000
+        probability_distribution[p] = 0
 
     # Get set of links on current page according to corpus
     current_links = corpus[page]
@@ -78,7 +78,6 @@ def transition_model(corpus, page, damping_factor):
     if current_links == set():
         for key in probability_distribution:
             probability_distribution[key] = 1 / total_pages
-        
         return probability_distribution
     
     # Assign probability of links in current page according to damping_factor
@@ -107,24 +106,26 @@ def sample_pagerank(corpus, damping_factor, n):
     page_ranks =  { page : 0 for page in corpus}
 
     # Store all pages in list variable
-    pages = list(page_ranks.keys())
+    pages = list(page_ranks)
 
     # Initialize dictionary to store page counts
-    page_counts = dict()
+    page_counts = { page : 0 for page in corpus}
 
     # Choose ranom page to start from, and increment count
     current_page = random.choice(pages)
     page_counts[current_page] += 1
 
     # Get n number of psudorandom values from the probability distribution returned  by the transtion model
-    for i in range(n):
+    for i in range(n - 1):
         links_distribution = transition_model(corpus, current_page, damping_factor)
-        current_page = random.choices(links_distribution.keys(), links_distribution.values(), k=1)
+        links = list(links_distribution.keys())
+        weights = list(links_distribution.values())
+        current_page = random.choices(links, weights, k=1)[0]
         page_counts[current_page] += 1
 
     # Calculate the rank based on count/n and store in page_ranks
     for page in corpus:
-        page_ranks[page] = page_counts / len(page_counts)
+        page_ranks[page] = page_counts[page] / n
  
     # Return page_rank
     return page_ranks
