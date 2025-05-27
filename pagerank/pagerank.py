@@ -140,27 +140,26 @@ def iterate_pagerank(corpus, damping_factor):
     PageRank values should sum to 1.
     """
 
-    # Initialize a dictionary with page names as keys, and initial values of 1 / N, N being number of pages
-    iterate_pr = { page : 1 / N for page in corpus }
-
     # Store number of total pages in corpus
     N = len(corpus)
+    d = damping_factor
 
-    # Initialize Links to be empty, and NumLinks to be 0
-    links = set()
-    num_links = 0
+    # Initialize a dictionary with page names as keys, and initial values of 1 / N, N being number of pages
+    pr = { page : 1 / N for page in corpus }
 
-    # Identify pages with links to current page, store them, and their count
-    for p in corpus:
-        for i in corpus:
-            if p == i:
-                continue
-            elif p in corpus[i]:
-                links.add(i)
-                NumLinks += 1
     
+    # Identify pages with links to current page, store them, and their count
     for page in corpus:
-        iterate_pr[page] = ((1 - d) / N) + ( d * 
+        # Add the random jump factor to each page in corpus
+        pr[page] += (1 - d) / N
+
+        # Loop over every page again, and add to running sum the formula (probability)
+        for i in corpus:
+            links = corpus[i]
+            num_links = len(corpus[i])
+            if page in links:
+                pr[page] += d * (pr[i]/num_links)
+    
         
 
 
