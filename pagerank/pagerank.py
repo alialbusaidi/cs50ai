@@ -147,22 +147,34 @@ def iterate_pagerank(corpus, damping_factor):
     # Initialize a dictionary with page names as keys, and initial values of 1 / N, N being number of pages
     pr = { page : 1 / N for page in corpus }
 
+    while True():
+        # Identify pages with links to current page, store them, their count, and iteratively update the pageranks
+        # Iterate over all pages in corpus
+        for p in corpus:
+            # Loop over every page again, aka 'previous' pages and add to running sum the formula (probability)
+            for i in corpus:
+                # Store links in each 'previous' page in temporary variables
+                links = corpus[i]
+
+                # If current page doesn't have any links, all pages are equally likelyl including this one
+                if not links:
+                    # Add equally likely factorized (dampened probability) to all pages
+                    pr = { page : pr[page] + (d / N) for page in corpus }
+                else:
+                    # Store number of links in each page varibales for later use and readibility
+                    num_links = len(corpus[i])
+
+                    # If current page is in the group links (pointed to by i)
+                    if p in links:
+                        # Add factor to running rum
+                        pr[p] += d (pr[i]/num_links)
+
+        # Check loop break condition
+        # If all values difference between pr(p) and pr(i) are within 0.001, break the loop
+        # Otherwise, continue another iteration
+    # Add the random  factor to each page in corpus
     
-    # Identify pages with links to current page, store them, and their count
-    for page in corpus:
-        # Add the random jump factor to each page in corpus
-        pr[page] += (1 - d) / N
-
-        # Loop over every page again, and add to running sum the formula (probability)
-        for i in corpus:
-            links = corpus[i]
-            num_links = len(corpus[i])
-            if page in links:
-                pr[page] += d * (pr[i]/num_links)
-    
-        
-
-
+    # Return final PageRank
 
 if __name__ == "__main__":
     main()
