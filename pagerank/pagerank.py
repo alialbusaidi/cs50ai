@@ -103,13 +103,13 @@ def sample_pagerank(corpus, damping_factor, n):
     """
 
     # Initialize dictionary dictionary to store PageRanks
-    sample_pr =  { page : 0 for page in corpus}
+    sample_pr = {page: 0 for page in corpus}
 
     # Store all pages in list variable
     pages = list(sample_pr)
 
     # Initialize dictionary to store page counts
-    page_counts = { page : 0 for page in corpus}
+    page_counts = {page: 0 for page in corpus}
 
     # Choose ranom page to start from, and increment count
     current_page = random.choice(pages)
@@ -130,6 +130,7 @@ def sample_pagerank(corpus, damping_factor, n):
     # Return page_rank
     return sample_pr
 
+
 def iterate_pagerank(corpus, damping_factor):
     """
     Return PageRank values for each page by iteratively updating
@@ -145,7 +146,7 @@ def iterate_pagerank(corpus, damping_factor):
     d = damping_factor
 
     # Initialize a dictionary with page names as keys, and initial values of 1 / N, N being number of pages
-    pr = { page : 1 / N for page in corpus }
+    pr = {page: 1 / N for page in corpus}
 
     while True:
         # Initialize variable to compute difference in probablities
@@ -197,6 +198,7 @@ def iterate_pagerank(corpus, damping_factor):
 
     # Return final PageRank
     return pr
+
 
 if __name__ == "__main__":
     main()
