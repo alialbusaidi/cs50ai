@@ -1,9 +1,9 @@
 from pagerank import transition_model, sample_pagerank
 
 corpus = {
-   "1.html": {"2.html","3.html"},
-   "2.html": {"3.html"},
-   "3.html": {"2.html"}
+    "1.html": {"2.html", "3.html"},
+    "2.html": {"3.html"},
+    "3.html": {"2.html"}
 }
 n = 10000
 damping_factor = 0.85
