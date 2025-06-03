@@ -1,7 +1,7 @@
 from pagerank import transition_model
 
 corpus1 = {"1.html": {"2.html", "3.html"}, "2.html": 
-    {"3.html"}, "3.html": {"2.html"}}
+           {"3.html"}, "3.html": {"2.html"}}
 page1 = "1.html"
 damping_factor1 = 0.85
 
@@ -10,7 +10,8 @@ print(transition_model1)
 
 print(f"Sum 1: {sum(transition_model1.values())}")
 
-corpus2 = {"1.html": {"2.html", "3.html"}, "2.html": {"3.html"}, "3.html": {"2.html"}, "4.html": set()}
+corpus2 = {"1.html": {"2.html", "3.html"}, "2.html": {
+    "3.html"}, "3.html": {"2.html"}, "4.html": set()}
 page2 = "4.html"
 damping_factor2 = 0.85
 
