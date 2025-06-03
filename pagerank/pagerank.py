@@ -147,7 +147,7 @@ def iterate_pagerank(corpus, damping_factor):
     # Initialize a dictionary with page names as keys, and initial values of 1 / N, N being number of pages
     pr = { page : 1 / N for page in corpus }
 
-    while True():
+    while True:
         # Initialize variable to compute difference in probablities
         max_delta = 0
 
@@ -165,7 +165,7 @@ def iterate_pagerank(corpus, damping_factor):
                     pr = { page : pr[page] + (d / N) for page in pr }
                 else:
                     # Store number of links in each page varibales for later use and readibility
-                    num_links = len(corpus[i])
+                    num_links = len(links)
 
                     # If current page is in the group links (pointed to by i)
                     if p in links:
@@ -178,6 +178,9 @@ def iterate_pagerank(corpus, damping_factor):
                         # Compare max difference
                         if max_delta < delta:
                             max_delta = delta
+                        
+                        # Assign new rank
+                        pr[p] = new_rank
 
         # Check loop break condition
         # If all values difference between pr(p) and pr(i) are within 0.001, break the loop
