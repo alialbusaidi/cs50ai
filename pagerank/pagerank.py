@@ -148,9 +148,12 @@ def iterate_pagerank(corpus, damping_factor):
     pr = { page : 1 / N for page in corpus }
 
     while True():
+        # Initialize variable to compute difference in probablities
+        max_delta = 0
+
         # Identify pages with links to current page, store them, their count, and iteratively update the pageranks
         # Iterate over all pages in corpus
-        for p in corpus:
+        for p in pr:
             # Loop over every page again, aka 'previous' pages and add to running sum the formula (probability)
             for i in corpus:
                 # Store links in each 'previous' page in temporary variables
@@ -159,22 +162,34 @@ def iterate_pagerank(corpus, damping_factor):
                 # If current page doesn't have any links, all pages are equally likelyl including this one
                 if not links:
                     # Add equally likely factorized (dampened probability) to all pages
-                    pr = { page : pr[page] + (d / N) for page in corpus }
+                    pr = { page : pr[page] + (d / N) for page in pr }
                 else:
                     # Store number of links in each page varibales for later use and readibility
                     num_links = len(corpus[i])
 
                     # If current page is in the group links (pointed to by i)
                     if p in links:
-                        # Add factor to running rum
-                        pr[p] += d (pr[i]/num_links)
+                        # assign new rank to new variable
+                        new_rank = pr[p] + d * (pr[i]/num_links)
+
+                        # compute difference
+                        delta = abs(new_rank - pr[p])
+
+                        # Compare max difference
+                        if max_delta < delta:
+                            max_delta = delta
 
         # Check loop break condition
         # If all values difference between pr(p) and pr(i) are within 0.001, break the loop
+        if max_delta <= 0.001:
+            break
         # Otherwise, continue another iteration
-    # Add the random  factor to each page in corpus
     
+    # Add the random  factor to each page in corpus
+    pr = { page : pr[page] + (1 - d) / N for page in pr}
+
     # Return final PageRank
+    return pr
 
 if __name__ == "__main__":
     main()
