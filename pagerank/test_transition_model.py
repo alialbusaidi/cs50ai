@@ -1,6 +1,7 @@
 from pagerank import transition_model
 
-corpus1 = {"1.html": {"2.html", "3.html"}, "2.html": {"3.html"}, "3.html": {"2.html"}}
+corpus1 = {"1.html": {"2.html", "3.html"}, "2.html": 
+    {"3.html"}, "3.html": {"2.html"}}
 page1 = "1.html"
 damping_factor1 = 0.85
 
