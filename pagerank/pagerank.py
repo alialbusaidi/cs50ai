@@ -159,28 +159,28 @@ def iterate_pagerank(corpus, damping_factor):
                 # Store links in each 'previous' page in temporary variables
                 links = corpus[i]
 
-                # If current page doesn't have any links, all pages are equally likelyl including this one
-                if not links:
+                # If current page doesn't have any links, all pages are equally likelyl including this one                           
+                # Or if current page is not in the group links (pointed to by i)
+                if (not links) or (p not in links):
                     # Add equally likely factorized (dampened probability) to all pages
                     pr = { page : pr[page] + (d / N) for page in pr }
                 else:
                     # Store number of links in each page varibales for later use and readibility
                     num_links = len(links)
 
-                    # If current page is in the group links (pointed to by i)
-                    if p in links:
-                        # assign new rank to new variable
-                        new_rank = pr[p] + d * (pr[i]/num_links)
+                    # assign new rank to new variable
+                    new_rank = pr[p] + d * (pr[i]/num_links)
 
-                        # compute difference
-                        delta = abs(new_rank - pr[p])
+                    # compute difference
+                    delta = abs(new_rank - pr[p])
 
-                        # Compare max difference
-                        if max_delta < delta:
-                            max_delta = delta
-                        
-                        # Assign new rank
-                        pr[p] = new_rank
+                    # Compare max difference
+                    if max_delta < delta:
+                        max_delta = delta
+                    
+                    # Assign new rank
+                    pr[p] = new_rank
+
 
         # Check loop break condition
         # If all values difference between pr(p) and pr(i) are within 0.001, break the loop
