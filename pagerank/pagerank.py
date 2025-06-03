@@ -151,45 +151,49 @@ def iterate_pagerank(corpus, damping_factor):
         # Initialize variable to compute difference in probablities
         max_delta = 0
 
+        # Create dictionaries to hold old values and compute new ones
+        old_ranks = pr.copy()
+        new_ranks = {}
+
         # Identify pages with links to current page, store them, their count, and iteratively update the pageranks
         # Iterate over all pages in corpus
-        for p in pr:
+        for p in old_ranks:
+            # start computing new_rank for p by adding random factor component
+            new_rank = (1 - d) / N
+
             # Loop over every page again, aka 'previous' pages and add to running sum the formula (probability)
             for i in corpus:
-                # Store links in each 'previous' page in temporary variables
+                # Store links in each page in temporary variables
                 links = corpus[i]
 
                 # If current page doesn't have any links, all pages are equally likelyl including this one                           
-                # Or if current page is not in the group links (pointed to by i)
-                if (not links) or (p not in links):
-                    # Add equally likely factorized (dampened probability) to all pages
-                    pr = { page : pr[page] + (d / N) for page in pr }
+                if not links:
+                    # Add equally likely factorized (dampened probability) to new rank
+                    new_rank += d * old_ranks[i] / N
                 else:
-                    # Store number of links in each page varibales for later use and readibility
-                    num_links = len(links)
+                    if p in links:
+                        # Store number of links in each page varibales for later use and readibility
+                        num_links = len(links)
+                        # assign new rank to new variable
+                        new_rank += (d * old_ranks[i] / num_links)
 
-                    # assign new rank to new variable
-                    new_rank = pr[p] + d * (pr[i]/num_links)
+            # compute difference
+            delta = abs(new_rank - old_ranks[p])
 
-                    # compute difference
-                    delta = abs(new_rank - pr[p])
-
-                    # Compare max difference
-                    if max_delta < delta:
-                        max_delta = delta
-                    
-                    # Assign new rank
-                    pr[p] = new_rank
-
+            # Compare max difference
+            if max_delta < delta:
+                max_delta = delta
+                        
+            # Assign new rank
+            new_ranks[p] = new_rank
 
         # Check loop break condition
         # If all values difference between pr(p) and pr(i) are within 0.001, break the loop
         if max_delta <= 0.001:
             break
-        # Otherwise, continue another iteration
-    
-    # Add the random  factor to each page in corpus
-    pr = { page : pr[page] + (1 - d) / N for page in pr}
+        
+        # Otherwise, continue another iteration, making the new_ranks the next old_ranks
+        pr = new_ranks
 
     # Return final PageRank
     return pr
