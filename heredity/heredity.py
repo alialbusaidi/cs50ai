@@ -171,14 +171,16 @@ def normalize(probabilities):
         
         # update probabilities[person]["gene"][0-2] by diving over sum_gene
         for i in range(3):
-            probabilities[person]["gene"][i] = probabilities[person]["gene"][i] / sum_gene
+            if sum_gene > 0:
+                probabilities[person]["gene"][i] = probabilities[person]["gene"][i] / sum_gene  
 
         # sum probabilities of probabilities[person]["trait"][0-1]
         sum_trait = sum(probabilities[person]["trait"].values())
 
         # update probabilities of probabilities[person]["trait"][0-1] by dividing over sum_trait
         for i in range(2):
-            probabilities[person]["trait"][i] = probabilities[person]["trait"][i] / sum_trait
+            if sum_trait > 0:
+                probabilities[person]["trait"][i] = probabilities[person]["trait"][i] / sum_trait
 
 
 
