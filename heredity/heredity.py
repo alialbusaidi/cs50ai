@@ -139,12 +139,46 @@ def joint_probability(people, one_gene, two_genes, have_trait):
         * everyone in set `have_trait` has the trait, and
         * everyone not in set` have_trait` does not have the trait.
     """
+    jp = 1
+
+    for person in people:
+        # If person has no known parents
+        
+        if (people[person]["father"] is None) and (people[person]["mother"] is None):
+            # Determine whether the person has the gene or not
+            have_gene = False
+            if person in one_gene or person in two_genes:
+                have_gene = True
+            
+            # If person has genes, determine the probabilites while having or not having the trait
+            if have_gene:
+                if person in have_trait:
+                    # Determine probability of person having a gene or two, and having the trait
+                    if person in one_gene:
+                        # Determine joint probability of person having one gene, while having and the trait
+                        jp *= PROBS["gene"][1] * PROBS["trait"][1][True]
+                    elif person in two_genes:
+                        # Determine joint probability of person having two genes, while having the trait      
+                        jp *= PROBS["gene"][2] * PROBS["trait"][2][True]
+                else:
+                    # Determine joint probability of person having a gene or two, and not having the trait
+                    if person in one_gene:
+                        # Determine joint probability of person having one gene, while having and the trait
+                        jp *= PROBS["gene"][1] * PROBS["trait"][1][False]
+                    elif person in two_genes:
+                        # Determine joint probability of person having two genes, while having the trait      
+                        jp *= PROBS["gene"][2] * PROBS["trait"][2][False]
+        
+            if not have_gene:
+                if person in have_trait:
+                    # Determine joint probability of person not having the gene and having the trait
+                    jp *= PROBS["gene"][0] * PROBS["trait"][0][True]
+                else:
+                    # Determine joint probability of person not having the gene and not having the trait
+                    jp *= PROBS["gene"][0] * PROBS["trait"][0][False]        
 
 
-
-
-
-    raise NotImplementedError
+    return jp
 
 
 def update(probabilities, one_gene, two_genes, have_trait, p):
