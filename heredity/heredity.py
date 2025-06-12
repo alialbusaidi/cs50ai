@@ -179,29 +179,75 @@ def joint_probability(people, one_gene, two_genes, have_trait):
         else:
             mother = people[person]["mother"]
             father = people[person]["father"]
-            mother_gene = True if mother in one_gene or mother in two_genes else False
-            father_gene = True if father in one_gene or father in two_genes else False
+            mother_one_gene = True if mother in one_gene else False
+            father_one_gene = True if father in one_gene else False
+            mother_two_genes = True if mother in two_genes else False
+            father_two_genes = True if father in two_genes else False
+            father_has_genes = True if father_one_gene or father_two_genes else False
+            mother_has_genes = True if mother_one_gene or mother_two_genes else False
+
 
             # If person has genes, determine the probabilites while having or not having the trait
             if have_gene:
-                if person in have_trait:
-                    # Determine probability of person having a gene or two, and having the trait
-                    if person in one_gene:
-                        # Determine joint probability of person having one gene, while having and the trait
+                # Determine probability of person having a gene or two, and having the trait, and whether parents have the genes or not
+                if person in one_gene:
+                    # Determine joint probability of person having one gene, while having and the trait
+                    if not mother_has_genes:
+                        p_mother = 0.01 * 0.01
+                        if father_one_gene:
+                            p_father = 0.99 * 0.5
+                        elif father_two_genes:
+                            p_father = 0.99 * 0.99
+                    elif mother_one_gene:
+                        p_mother = 0.99 * 0.5
+                        if father_one_gene:
+                            p_father = 0.99 * 0.5
+                        elif father_two_genes:
+                            p_father = 0.99 * 0.99
+                    elif mother_two_genes:
+                        p_mother = 0.99 * 0.99
+                        if father_one_gene:
+                            p_father = 0.99 * 0.5
+                        elif father_two_genes:
+                            p_father = 0.99 * 0.99
+
+                    # Determine joint probability of person having one gene, while having and the trait
+                    elif not father_has_genes:
+                        p_father = 0.01 * 0.01
+                        if mother_one_gene:
+                            p_mother = 0.99 * 0.5
+                        elif mother_two_genes:
+                            p_mother = 0.99 * 0.99
+                    elif father_one_gene:
+                        p_father = 0.99 * 0.5
+                        if mother_one_gene:
+                            p_mother = 0.99 * 0.5
+                        elif mother_two_genes:
+                            p_mother = 0.99 * 0.99
+                    elif father_two_genes:
+                        p_father = 0.99 * 0.99
+                        if mother_one_gene:
+                            p_mother = 0.99 * 0.5
+                        elif mother_two_genes:
+                            p_mother = 0.99 * 0.99
+
+                elif person in two_genes:
+                    if not mother_has_genes:
+                        p_mother = 0.01
+                        if father_one_gene:
+                            p_father = 0.99 * 0.5
+                        elif father_two_genes:
+                            p_father = 0.99 * 0.99
+                    elif mother_one_gene:
+                        p_mother = 0.99 * 0.5
+                        if father_one_gene:
+                            p_father = 0.99 * 0.5
+                        elif father_two_genes:
+                            p_father = 0.99
+
+                jp *= (p_mother + p_father)
                         
-                    elif person in two_genes:
-                        # Determine joint probability of person having two genes, while having the trait      
-                        jp *= PROBS["gene"][2] * PROBS["trait"][2][True]
-                else:
-                    # Determine joint probability of person having a gene or two, and not having the trait
-                    if person in one_gene:
-                        # Determine joint probability of person having one gene, while having and the trait
-                        jp *= PROBS["gene"][1] * PROBS["trait"][1][False]
-                    elif person in two_genes:
-                        # Determine joint probability of person having two genes, while having the trait      
-                        jp *= PROBS["gene"][2] * PROBS["trait"][2][False]
-        
-            if not have_gene:
+ have_gene:
                 if person in have_trait:
                     # Determine joint probability of person not having the gene and having the trait
                     jp *= PROBS["gene"][0] * PROBS["trait"][0][True]
