@@ -135,7 +135,7 @@ def pass_gene(parent_k):
     if parent_k == 0:
         return PROBS["mutation"]
     elif parent_k == 1:
-        return PROBS["mutation"] * 0.5
+        return 0.5
     else:
         return (1 - PROBS["mutation"]) 
 
@@ -182,7 +182,7 @@ def joint_probability(people, one_gene, two_genes, have_trait):
             
             if k == 2: 
                 jp *= father_p * mother_p * PROBS["trait"][k][person in have_trait]
-            if k == 1: 
+            elif k == 1: 
                 jp *= (mother_p * (1 - father_p) + father_p * (1 - mother_p)) * \
                     PROBS["trait"][k][person in have_trait]
             else:      
