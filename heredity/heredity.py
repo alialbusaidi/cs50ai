@@ -128,6 +128,15 @@ def powerset(s):
     ]
 
 
+def pass_gene(parent_k):
+    """
+    Input a parent's name and return chances of that parent passing a gene after muation.
+    """
+    if parent_k == 0:   return PROBS["mutation"]
+    elif parent_k == 1: return PROBS["mutation"] * 0.5
+    else:               return (1 - PROBS["mutation"]) 
+
+
 def joint_probability(people, one_gene, two_genes, have_trait):
     """
     Compute and return a joint probability.
@@ -146,6 +155,22 @@ def joint_probability(people, one_gene, two_genes, have_trait):
         if person in two_genes:     k = 2
         elif person in one_gene:    k = 1
         else:                       k = 0
+
+        if people[person]["father"] is None:
+            jp *= PROBS["gene"][k] * PROBS["trait"][k][person in have_trait]
+        
+        else:
+            if people[person]["father"] in two_genes:   father_p = pass_gene(2)
+            elif people[person]["father"] in one_gene:  father_p = pass_gene(1)
+            else:                                       father_p = pass_gene(0)
+
+            if people[person]["mother"] in two_genes:   mother_p = pass_gene(2)
+            elif people[person]["mother"] in one_gene:  mother_p = pass_gene(1)
+            else:                                       mother_p = pass_gene(0)
+            
+            if k == 2: jp *= father_p * mother_p * PROBS["trait"][k][person in have_trait]
+            if k == 1: jp *= (mother_p * (1 - father_p) + father_p * (1 - mother_p)) * PROBS["trait"][k][person in have_trait]
+            else:      jp *= (1 - mother_p) * (1 - father_p) * PROBS["trait"][k][person in have_trait]
 
     return jp
 
