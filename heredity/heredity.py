@@ -183,7 +183,8 @@ def joint_probability(people, one_gene, two_genes, have_trait):
             if k == 2: 
                 jp *= father_p * mother_p * PROBS["trait"][k][person in have_trait]
             if k == 1: 
-                jp *= (mother_p * (1 - father_p) + father_p * (1 - mother_p)) * PROBS["trait"][k][person in have_trait]
+                jp *= (mother_p * (1 - father_p) + father_p * (1 - mother_p)) * \
+                    PROBS["trait"][k][person in have_trait]
             else:      
                 jp *= (1 - mother_p) * (1 - father_p) * PROBS["trait"][k][person in have_trait]
 
@@ -233,7 +234,6 @@ def normalize(probabilities):
         for i in range(2):
             if sum_trait > 0:
                 probabilities[person]["trait"][i] = probabilities[person]["trait"][i] / sum_trait
-
 
 
 if __name__ == "__main__":
