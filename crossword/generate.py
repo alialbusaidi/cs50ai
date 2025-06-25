@@ -1,6 +1,6 @@
 import sys
 
-from crossword import Crossword
+from crossword import Crossword, Variable
 from crossword import *
 
 
