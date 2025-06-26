@@ -174,7 +174,7 @@ class CrosswordCreator():
         crossword variable); return False otherwise.
         """
         # Check to see if all variables are in the assignment dict
-        if len(self.variables) == len(assignment):
+        if len(self.crossword.variables) == len(assignment):
             return True
         else:
             return False
