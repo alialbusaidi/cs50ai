@@ -141,7 +141,6 @@ class CrosswordCreator():
                         self.domains[x].remove(x_word)
                         revised = True
 
-
         return revised
 
     def ac3(self, arcs=None):
