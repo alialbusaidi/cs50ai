@@ -161,8 +161,15 @@ class CrosswordCreator():
             # Dequeue a pair of variables (Arc) to enforce consistency
             x, y = arcs.pop()
             
+            # If any revision is done after enforcing arc consistency, 
             if self.revise(x, y):
-
+                # Check if domain of x is empty, then unsolvable
+                if len(self.domains[x]) == 0:
+                    return False
+                # For all neighbors of x, add to queue to check for consistency
+                for z in self.neighbors(x) - {y}:
+                    arcs.append((z, x))
+        return True
 
 
 
