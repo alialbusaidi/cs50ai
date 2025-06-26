@@ -105,14 +105,12 @@ class CrosswordCreator():
 
         # For each variable in the crossword
         for variable in self.crossword.variables:
-            # For each domain in the crossword
-            for domain in self.domains:
-                # For each word in that variable's domain
-                for word in domain[variable]:
-                    # If that word doesn't meet the unary constraint, i.e. if length of word isn;t same as length of variable
-                    if len(word) != variable.length:
-                        # Remove that word from the domain of the variable
-                        domain[variable].remove(word)
+            # For each word in that variable's domain
+            for word in list(self.domains[variable]):
+                # If that word doesn't meet the unary constraint, i.e. if length of word isn;t same as length of variable
+                if len(word) != variable.length:
+                    # Remove that word from the domain of the variable
+                    self.domains[variable].remove(word)
 
     
 
