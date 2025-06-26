@@ -129,7 +129,7 @@ class CrosswordCreator():
         revised = False
 
         # Save overlap indices (if any) in variable
-        overlaps = self.overlaps[x, y]
+        overlaps = self.crossword.overlaps[x, y]
 
         # If overlap exists between variables, continue to loop over x's domain
         if overlaps:
@@ -201,7 +201,7 @@ class CrosswordCreator():
                 return False
             # There are no conflict between neighboring variables
             for neighbor in var.neighbors:
-                overlaps = self.overlaps[var, neighbor]
+                overlaps = self.crossword.overlaps[var, neighbor]
                 if assignment[var][overlaps[0]] != assignment[neighbor[overlaps[1]]]:
                     return False
         return True
