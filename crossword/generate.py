@@ -104,7 +104,7 @@ class CrosswordCreator():
         """
 
         # For each variable in the crossword
-        for variable in self.variables:
+        for variable in self.crossword.variables:
             # For each domain in the crossword
             for domain in self.domains:
                 # For each word in that variable's domain
