@@ -154,12 +154,16 @@ class CrosswordCreator():
 
         # If arcs list is None, consider all arcs in problem
         if arcs is None:
-            arcs = all_arcs(self)
+            arcs = self.all_arcs()
 
-        else:
-            # While arcs is not empty
-            while len(arcs) != 0:
-                raise NotImplementedError
+        # While arcs is not empty
+        while len(arcs) != 0:
+            # Dequeue a pair of variables (Arc) to enforce consistency
+            x, y = arcs.pop()
+            
+            if self.revise(x, y):
+
+
 
 
         
@@ -207,22 +211,22 @@ class CrosswordCreator():
         """
         raise NotImplementedError
 
-def all_arcs(self):
-    """
-    Return a list of tuples containing pairs of all variables (Arcs) in a crossword.
-    """
-    arcs = list()
-    # For each variable (key) in the domains dict
-    for x in self.domains:
-        # Check against every other variable
-        for y in self.domains:
-            if x is y:
-                # If the same variable, skip
-                continue
-            else:
-                # Add this the pair of variables to the arcs list
-                arcs.append((x, y))    
-    return arcs
+    def all_arcs(self):
+        """
+        Return a list of tuples containing pairs of all variables (Arcs) in a crossword.
+        """
+        arcs = list()
+        # For each variable (key) in the domains dict
+        for x in self.domains:
+            # Check against every other variable
+            for y in self.domains:
+                if x is y:
+                    # If the same variable, skip
+                    continue
+                else:
+                    # Add this the pair of variables to the arcs list
+                    arcs.append((x, y))    
+        return arcs
 
 def main():
 
