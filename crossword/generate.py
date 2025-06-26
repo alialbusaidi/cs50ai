@@ -102,7 +102,6 @@ class CrosswordCreator():
         (Remove any values that are inconsistent with a variable's unary
          constraints; in this case, the length of the word.)
         """
-
         # For each variable in the crossword
         for variable in self.crossword.variables:
             # For each word in that variable's domain
@@ -132,12 +131,11 @@ class CrosswordCreator():
         # If overlap exists between variables, continue to loop over x's domain
         if overlaps:
             # For each value in x variable domain
-            for x_word in self.domains[x]:
-                # Check against each value in y variable domain
-                for y_word in self.domains[y]:
-                    if x_word[overlaps[0]] != y_word[overlaps[1]]:
-                        self.domains[x].remove(x_word)
-                        revised = True
+            for x_word in list(self.domains[x]):
+                # Check against all value in y variable domain
+                if not any(x_word[overlaps[0]] == y_word[overlaps[1]] for y_word in list(self.domains[y])):
+                    self.domains[x].remove(x_word)
+                    revised = True
         return revised
 
     def ac3(self, arcs=None):
