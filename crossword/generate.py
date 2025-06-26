@@ -129,7 +129,7 @@ class CrosswordCreator():
         revised = False
 
         # Save overlap indices (if any) in variable
-        overlaps = self.crossword.overlaps[x, y]
+        overlaps = self.overlaps[x, y]
 
         # If overlap exists between variables, continue to loop over x's domain
         if overlaps:
@@ -171,22 +171,40 @@ class CrosswordCreator():
                     arcs.append((z, x))
         return True
 
-
-
         
     def assignment_complete(self, assignment):
         """
         Return True if `assignment` is complete (i.e., assigns a value to each
         crossword variable); return False otherwise.
         """
-        raise NotImplementedError
+        # Check to see if all variables are in the assignment dict
+        if len(self.variables) == len(assignment):
+            return True
+        else:
+            return False
 
     def consistent(self, assignment):
         """
         Return True if `assignment` is consistent (i.e., words fit in crossword
         puzzle without conflicting characters); return False otherwise.
         """
-        raise NotImplementedError
+        # Check that all values (words) are distinct
+        # Create set of assignment dict values, then compare length of set to assignment length
+        distinct_values = set(assignment.values())
+        if len(distinct_values) != len(assignment):
+            return False
+
+        # For each variable, check:
+        for var in assignment:
+            # Each Value (word) is the correct length
+            if len(assignment[var]) != var.length:
+                return False
+            # There are no conflict between neighboring variables
+            for neighbor in var.neighbors:
+                overlaps = self.overlaps[var, neighbor]
+                if assignment[var][overlaps[0]] != assignment[neighbor[overlaps[1]]]:
+                    return False
+        return True
 
     def order_domain_values(self, var, assignment):
         """
