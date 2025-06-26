@@ -224,7 +224,10 @@ class CrosswordCreator():
         degree. If there is a tie, any of the tied variables are acceptable
         return values.
         """
-        raise NotImplementedError
+        # Return arbitrary unassigned variables
+        for var in self.crossword.variables:
+            if var not in assignment:
+                return var
 
     def backtrack(self, assignment):
         """
