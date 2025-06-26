@@ -140,7 +140,6 @@ class CrosswordCreator():
                     if x_word[overlaps[0]] != y_word[overlaps[1]]:
                         self.domains[x].remove(x_word)
                         revised = True
-
         return revised
 
     def ac3(self, arcs=None):
@@ -152,8 +151,18 @@ class CrosswordCreator():
         Return True if arc consistency is enforced and no domains are empty;
         return False if one or more domains end up empty.
         """
-        raise NotImplementedError
 
+        # If arcs list is None, consider all arcs in problem
+        if arcs is None:
+            arcs = all_arcs(self)
+
+        else:
+            # While arcs is not empty
+            while len(arcs) != 0:
+                raise NotImplementedError
+
+
+        
     def assignment_complete(self, assignment):
         """
         Return True if `assignment` is complete (i.e., assigns a value to each
@@ -198,6 +207,22 @@ class CrosswordCreator():
         """
         raise NotImplementedError
 
+def all_arcs(self):
+    """
+    Return a list of tuples containing pairs of all variables (Arcs) in a crossword.
+    """
+    arcs = list()
+    # For each variable (key) in the domains dict
+    for x in self.domains:
+        # Check against every other variable
+        for y in self.domains:
+            if x is y:
+                # If the same variable, skip
+                continue
+            else:
+                # Add this the pair of variables to the arcs list
+                arcs.append((x, y))    
+    return arcs
 
 def main():
 
