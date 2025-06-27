@@ -196,9 +196,9 @@ class CrosswordCreator():
             if len(assignment[var]) != var.length:
                 return False
             # There are no conflict between neighboring variables
-            for neighbor in var.neighbors:
+            for neighbor in self.crossword.neighbors(var):
                 overlaps = self.crossword.overlaps[var, neighbor]
-                if assignment[var][overlaps[0]] != assignment[neighbor[overlaps[1]]]:
+                if assignment[var][overlaps[0]] != assignment[neighbor][overlaps[1]]:
                     return False
         return True
 
