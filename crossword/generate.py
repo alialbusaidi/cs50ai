@@ -242,14 +242,15 @@ class CrosswordCreator():
         var = self.select_unassigned_variable(assignment)
 
         for value in self.domains[var]:
+            assignment[var] = value
+
             # If value consistent with assignment
             if self.consistent(assignment):
-                assignment.add({var: value})
                 result = self.backtrack(assignment)
-                if self.consistent(assignment):
+                if result is not None:
                     return result
-                assignment.remove(var)
-        return assignment
+            del assignment[var]
+        return None
 
 
     def all_arcs(self):
