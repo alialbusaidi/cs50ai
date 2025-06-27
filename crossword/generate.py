@@ -267,7 +267,7 @@ class CrosswordCreator():
                 unassigned_variables[variable] = variable_domain_count
         
         # Sort the variables in ascending order according to their domain word count
-        sorted_unassigned_variables = sorted(unassigned_variables)
+        sorted_unassigned_variables = sorted(unassigned_variables.keys(), key=lambda var: unassigned_variables[var])
 
         # If there are unassigned variables found, return one with smallest domain
         if len(sorted_unassigned_variables) > 0:
