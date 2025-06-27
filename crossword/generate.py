@@ -219,26 +219,24 @@ class CrosswordCreator():
         # Create domain dict
         var_domain_n = dict()
         # Get a list of that variables neighbors
-        neighbors = list(self.crossword.neighbors[var])
-
-        # Store number of neighbors
-        num_neighbors = len(neighbors)
+        neighbors = list(self.crossword.neighbors(var))
 
         # For each word in the domain of var
         for word in var_domain:
             eliminated_words = 0
             for neighbor in neighbors:
+                neighbors_domain = self.domains[neighbor]
                 # Get overlaps between current variable and current neighbor 
                 i, j = self.crossword.overlaps[var, neighbor]
-
                 # For each word elimination in the neighbors domain, increase a count
-                if any(word[i] != neighbor_word[j] for neighbor_word in self.domains[neighbor]):
-                    eliminated_words += 1
+                for neighbor_word in neighbors_domain:
+                    if word[i] != neighbor_word[j]:
+                        eliminated_words += 1
             # Store num of eliminated words in neighbor's domain for current word in dict.
             var_domain_n[word] = eliminated_words
         
         # Store list of keys (words) sorted in ascending order based on values (num eliminated words)
-        ordered_var_domain = sorted(var_domain_n)
+        ordered_var_domain = sorted(var_domain_n, reverse=True)
 
         return ordered_var_domain
 
