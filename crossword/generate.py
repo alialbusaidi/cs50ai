@@ -163,7 +163,7 @@ class CrosswordCreator():
                 if len(self.domains[x]) == 0:
                     return False
                 # For all neighbors of x, add to queue to check for consistency
-                for z in self.neighbors(x) - {y}:
+                for z in self.crossword.neighbors(x) - {y}:
                     arcs.append((z, x))
         return True
 
@@ -210,7 +210,7 @@ class CrosswordCreator():
         that rules out the fewest values among the neighbors of `var`.
         """
         # Return an unordered list of values in domain of var for testing purpose
-        return self.domains[var]
+        return list(self.domains[var])
 
     def select_unassigned_variable(self, assignment):
         """
