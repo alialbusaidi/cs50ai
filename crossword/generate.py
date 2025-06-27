@@ -187,6 +187,7 @@ class CrosswordCreator():
         # Check that all values (words) are distinct
         # Create set of assignment dict values, then compare length of set to assignment length
         distinct_values = set(assignment.values())
+
         if len(distinct_values) != len(assignment):
             return False
 
@@ -197,6 +198,10 @@ class CrosswordCreator():
                 return False
             # There are no conflict between neighboring variables
             for neighbor in self.crossword.neighbors(var):
+                # Skip if the neighbor is not assigned
+                if neighbor not in assignment:
+                    continue
+                
                 overlaps = self.crossword.overlaps[var, neighbor]
                 if assignment[var][overlaps[0]] != assignment[neighbor][overlaps[1]]:
                     return False
