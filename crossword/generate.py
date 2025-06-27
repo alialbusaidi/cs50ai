@@ -250,10 +250,34 @@ class CrosswordCreator():
         degree. If there is a tie, any of the tied variables are acceptable
         return values.
         """
-        # Return arbitrary unassigned variables
-        for var in self.crossword.variables:
-            if var not in assignment:
-                return var
+
+        # Initialize dict to store unassigned variables and number of their domains, and other useful variables
+        unassigned_variables = dict()
+        variables = list(self.crossword.variables)
+
+        # Store all unassigned variables and number of their domains in dict
+
+        # Loop over all variables
+        for variable in variables:
+            # If this variable is not assigned
+            if variable not in assignment:
+                # Get count of words in domain
+                variable_domain_count = len(list(self.domains[variable]))
+                # Store variable and domain count in dict
+                unassigned_variables[variable] = variable_domain_count
+        
+        # Sort the variables in ascending order according to their domain word count
+        sorted_unassigned_variables = sorted(unassigned_variables)
+
+        # If there are unassigned variables found, return one with smallest domain
+        if len(sorted_unassigned_variables) > 0:
+            return sorted_unassigned_variables[0]
+        
+        # Else if there are no unassigned variables, return None
+        return None
+            
+
+
 
     def backtrack(self, assignment):
         """
