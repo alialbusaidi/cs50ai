@@ -201,7 +201,7 @@ class CrosswordCreator():
                 # Skip if the neighbor is not assigned
                 if neighbor not in assignment:
                     continue
-                
+
                 overlaps = self.crossword.overlaps[var, neighbor]
                 if assignment[var][overlaps[0]] != assignment[neighbor][overlaps[1]]:
                     return False
@@ -214,8 +214,35 @@ class CrosswordCreator():
         The first value in the list, for example, should be the one
         that rules out the fewest values among the neighbors of `var`.
         """
-        # Return an unordered list of values in domain of var for testing purpose
-        return list(self.domains[var])
+        
+        var_domain = list(self.domains[var])
+        # Create domain dict
+        var_domain_n = dict()
+        # Get a list of that variables neighbors
+        neighbors = list(self.crossword.neighbors[var])
+
+        # Store number of neighbors
+        num_neighbors = len(neighbors)
+
+        # For each word in the domain of var
+        for word in var_domain:
+            eliminated_words = 0
+            for neighbor in neighbors:
+                # Get overlaps between current variable and current neighbor 
+                i, j = self.crossword.overlaps[var, neighbor]
+
+                # For each word elimination in the neighbors domain, increase a count
+                if any(word[i] != neighbor_word[j] for neighbor_word in self.domains[neighbor]):
+                    eliminated_words += 1
+            # Store num of eliminated words in neighbor's domain for current word in dict.
+            var_domain_n[word] = eliminated_words
+        
+        # Store list of keys (words) sorted in ascending order based on values (num eliminated words)
+        ordered_var_domain = sorted(var_domain_n)
+
+        return ordered_var_domain
+
+
 
     def select_unassigned_variable(self, assignment):
         """
