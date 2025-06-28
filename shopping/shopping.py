@@ -93,22 +93,21 @@ def load_data(filename):
         for row in reader:
             # Append to evidence the a list of data points from colum 0 to 17
             evidence.append(
-                [
-                    int(row[0]), float(row[1]), int(row[2]),
-                    float(row[3]), int(row[4]), float(row[5])
-                ]
-                +
-                [
-                    float(cell) for cell in row[6:10]
-                ]
-                +
-                [
-
-                ]
+                [int(row[0]), float(row[1]), int(row[2]),
+                 float(row[3]), int(row[4]), float(row[5])] +
+                [float(cell) for cell in row[6:10]] +
+                [month_to_int(row[10])] +
+                [int(cell) for cell in row[11:15]] +
+                [1 if row[15] == "Returning_Visitor" else 0] +
+                [1 if row[16] == "True" else 0]
             )
 
             # Append to labels labels for each row
-
+            labels.append(
+                [1 if row[17] == "True" else 0]
+            )
+    
+    return (evidence, labels)
 
 
 def train_model(evidence, labels):
