@@ -59,7 +59,23 @@ def load_data(filename):
     labels should be the corresponding list of labels, where each label
     is 1 if Revenue is true, and 0 otherwise.
     """
-    raise NotImplementedError
+    # Read file using open and reader method
+    with open(filename) as f:
+        reader = csv.reader(f)
+        next(reader)
+
+        # Initialize evidence and labels lists
+        evidence, labels = [], []
+
+        # Read data row by row, appending each data to the relevant list
+        for row in reader:
+            # Append to evidence the a list of data points from colum 0 to 17
+            evidence.append(
+                
+            )
+
+            # Append to labels labels for each row
+
 
 
 def train_model(evidence, labels):
