@@ -121,6 +121,7 @@ def evaluate(labels, predictions):
     sensitivity = get_sense(labels, predictions)
     specificity = get_specific(labels, predictions) 
 
+    return (sensitivity, specificity)
 
 def get_specific(labels, predictions):
     """
