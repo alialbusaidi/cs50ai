@@ -128,12 +128,14 @@ def get_specific(labels, predictions):
     Calculate true negative rate defined as: Correct negative predictions / total negative predictions
     """
 
-    total_negatives = predictions.count(0)
+    total_negatives = 0
     correct_negatives = 0
 
     for actual, predicted in zip(labels, predictions):
-        if predicted == 0 == actual:
-            correct_negatives += 1
+        if actual == 0:
+            total_negatives += 1
+            if predicted == 0:
+                correct_negatives += 1
 
     specificity = correct_negatives / total_negatives
 
@@ -145,13 +147,15 @@ def get_sense(labels, predictions):
     calculate sensitivity defined as ratio of actual positives (1) identified. 
     As a ratio: correctly predicted / total positive predictions
     """
-    total_positives = predictions.count(1)
+    total_positives = 0
     correct_positives = 0
 
     # Iterate over each label/prediction pair
     for actual, predicted in zip(labels, predictions):
-        if predicted == 1 == actual:
-            correct_positives += 1
+        if actual == 1:
+            total_positives += 1
+            if predicted == 1:
+                correct_positives += 1
     
     sensitivity = correct_positives / total_positives
 
