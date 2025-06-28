@@ -12,3 +12,6 @@ def main():
 
     print(f"First evidence: {evidence[0]}")
     print(f"first label: {labels[0]}")
+
+if __name__ == "__main__":
+    main()
