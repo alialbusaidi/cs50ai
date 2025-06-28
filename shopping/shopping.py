@@ -31,6 +31,28 @@ def main():
     print(f"True Negative Rate: {100 * specificity:.2f}%")
 
 
+def month_to_int(month):
+    """
+    Takes input a month as string and returns a int representation, 0 through 11.
+    """
+    # Define dict to map months to an int
+    month_map = {
+    "Jan": 0,
+    "Feb": 1,
+    "Mar": 2,
+    "Apr": 3,
+    "May": 4,
+    "Jun": 5,
+    "Jul": 6,
+    "Aug": 7,
+    "Sep": 8,
+    "Oct": 9,
+    "Nov": 10,
+    "Dec": 11,
+}
+    
+    return month_map(month)
+
 def load_data(filename):
     """
     Load shopping data from a CSV file `filename` and convert into a list of
@@ -38,23 +60,23 @@ def load_data(filename):
 
     evidence should be a list of lists, where each list contains the
     following values, in order:
-        - Administrative, an integer
-        - Administrative_Duration, a floating point number
-        - Informational, an integer
-        - Informational_Duration, a floating point number
-        - ProductRelated, an integer
-        - ProductRelated_Duration, a floating point number
-        - BounceRates, a floating point number
-        - ExitRates, a floating point number
-        - PageValues, a floating point number
-        - SpecialDay, a floating point number
-        - Month, an index from 0 (January) to 11 (December)
-        - OperatingSystems, an integer
-        - Browser, an integer
-        - Region, an integer
-        - TrafficType, an integer
-        - VisitorType, an integer 0 (not returning) or 1 (returning)
-        - Weekend, an integer 0 (if false) or 1 (if true)
+        0 - Administrative, an integer
+        1 - Administrative_Duration, a floating point number
+        2 - Informational, an integer
+        3 - Informational_Duration, a floating point number
+        4 - ProductRelated, an integer
+        5 - ProductRelated_Duration, a floating point number
+        6 - BounceRates, a floating point number
+        7 - ExitRates, a floating point number
+        8 - PageValues, a floating point number
+        9 - SpecialDay, a floating point number
+        10 - Month, an index from 0 (January) to 11 (December)
+        11 - OperatingSystems, an integer
+        12 - Browser, an integer
+        13 - Region, an integer
+        14 - TrafficType, an integer
+        15 - VisitorType, an integer 0 (not returning) or 1 (returning)
+        16 - Weekend, an integer 0 (if false) or 1 (if true)
 
     labels should be the corresponding list of labels, where each label
     is 1 if Revenue is true, and 0 otherwise.
@@ -71,7 +93,18 @@ def load_data(filename):
         for row in reader:
             # Append to evidence the a list of data points from colum 0 to 17
             evidence.append(
-                
+                [
+                    int(row[0]), float(row[1]), int(row[2]),
+                    float(row[3]), int(row[4]), float(row[5])
+                ]
+                +
+                [
+                    float(cell) for cell in row[6:10]
+                ]
+                +
+                [
+
+                ]
             )
 
             # Append to labels labels for each row
