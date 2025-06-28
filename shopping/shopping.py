@@ -31,7 +31,7 @@ def main():
     print(f"True Negative Rate: {100 * specificity:.2f}%")
 
     
-    return month_map[month]
+    
 
 def load_data(filename):
     """
@@ -139,6 +139,7 @@ def month_to_int(month):
     "Nov": 10,
     "Dec": 11,
     }
+    return month_map[month]
 
 if __name__ == "__main__":
     main()
