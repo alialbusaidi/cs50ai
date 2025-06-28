@@ -30,26 +30,6 @@ def main():
     print(f"True Positive Rate: {100 * sensitivity:.2f}%")
     print(f"True Negative Rate: {100 * specificity:.2f}%")
 
-
-def month_to_int(month):
-    """
-    Takes input a month as string and returns a int representation, 0 through 11.
-    """
-    # Define dict to map months to an int
-    month_map = {
-    "Jan": 0,
-    "Feb": 1,
-    "Mar": 2,
-    "Apr": 3,
-    "May": 4,
-    "June": 5,
-    "Jul": 6,
-    "Aug": 7,
-    "Sep": 8,
-    "Oct": 9,
-    "Nov": 10,
-    "Dec": 11,
-    }
     
     return month_map[month]
 
@@ -115,7 +95,12 @@ def train_model(evidence, labels):
     Given a list of evidence lists and a list of labels, return a
     fitted k-nearest neighbor model (k=1) trained on the data.
     """
-    raise NotImplementedError
+    # Specify classifier model
+    model = KNeighborsClassifier(n_neighbors=1)
+    model.fit(evidence, labels)
+
+    return model
+    
 
 
 def evaluate(labels, predictions):
@@ -135,6 +120,25 @@ def evaluate(labels, predictions):
     """
     raise NotImplementedError
 
+def month_to_int(month):
+    """
+    Takes input a month as string and returns a int representation, 0 through 11.
+    """
+    # Define dict to map months to an int
+    month_map = {
+    "Jan": 0,
+    "Feb": 1,
+    "Mar": 2,
+    "Apr": 3,
+    "May": 4,
+    "June": 5,
+    "Jul": 6,
+    "Aug": 7,
+    "Sep": 8,
+    "Oct": 9,
+    "Nov": 10,
+    "Dec": 11,
+    }
 
 if __name__ == "__main__":
     main()
