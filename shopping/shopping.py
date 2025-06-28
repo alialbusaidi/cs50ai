@@ -49,9 +49,9 @@ def month_to_int(month):
     "Oct": 9,
     "Nov": 10,
     "Dec": 11,
-}
+    }
     
-    return month_map(month)
+    return month_map[month]
 
 def load_data(filename):
     """
