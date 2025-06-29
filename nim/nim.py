@@ -120,7 +120,7 @@ class NimAI():
         """
         new_q = old_q + self.alpha * (self.get_q_value(state, action) - old_q)
         
-        return new_q
+        self.q[state, action] = new_q
 
     def best_future_reward(self, state):
         """
