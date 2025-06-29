@@ -142,6 +142,7 @@ class NimAI():
         
         return max(q_actions[max(q_actions)]) if q_actions else 0
 
+
     def choose_action(self, state, epsilon=True):
         """
         Given a state `state`, return an action `(i, j)` to take.
@@ -157,7 +158,26 @@ class NimAI():
         If multiple actions have the same Q-value, any of those
         options is an acceptable return value.
         """
-        raise NotImplementedError
+        best_action = self.best_future_reward(state)
+        random_action = self.random_choice(state)
+
+        # If epsilon is False
+        if not epsilon:
+            return best_action
+        else:
+            return random.choices([best_action, random_action], weights=[(1 - self.epsilon), self.epsilon])
+
+        
+
+    def random_choice(self, state):
+        actions = []
+
+        for i, j in self.q:
+            if i == state:
+                actions.append(j)
+        
+        return random.choice(actions) if actions else 0
+
 
 
 def train(n):
