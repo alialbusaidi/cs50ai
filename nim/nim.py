@@ -133,7 +133,14 @@ class NimAI():
         `state`, return 0.
         """
 
-        raise NotImplementedError
+        # Assuming self.q[x] is an int, compare all possible actions
+        q_actions = {}
+
+        for (i, j) in self.q:
+            if i == state:
+                q_actions[self.q(i, j)] = j
+        
+        return max(q_actions[max(q_actions)]) if q_actions else 0
 
     def choose_action(self, state, epsilon=True):
         """
