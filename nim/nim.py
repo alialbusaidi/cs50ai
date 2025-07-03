@@ -163,15 +163,20 @@ class NimAI():
         If multiple actions have the same Q-value, any of those
         options is an acceptable return value.
         """
-        best_action = self.best_future_reward(state)
-        random_action = self.random_choice(state)
+        # Get list of legal actions
+        actions = list(Nim.available_actions(state))
 
         # If epsilon is False
         if not epsilon:
-            return best_action
+            return max(actions, key=lambda a: self.get_q_value(state, a))
+        
+        # Else if random probabliy yielded epsilon, choice a random choice (Randomly choose with probabilty of epsilon)
+        elif random.random() < self.epsilon:
+            return random.choice(actions)
+        
+        # Else return the max,
         else:
-            return random.choices([best_action, random_action], weights=[(1 - self.epsilon), self.epsilon])
-
+            return max(actions, key=lambda a: self.get_q_value(state, a))
         
 
     def random_choice(self, state):
