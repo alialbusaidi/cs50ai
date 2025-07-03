@@ -120,7 +120,7 @@ class NimAI():
         """
         # new estimate = reward + future_rewards
         estimate = reward + future_rewards
-        self.q[(state, action)] = old_q + self.alpha * (estimate - old_q)
+        self.q[tuple(state), action] = old_q + self.alpha * (estimate - old_q)
 
     def best_future_reward(self, state):
         """
