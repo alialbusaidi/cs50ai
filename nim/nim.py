@@ -133,8 +133,13 @@ class NimAI():
         `state`, return 0.
         """
 
-        # Assuming self.q[x] is an int, compare all possible actions
-        q_actions = {}
+        # Obtain list of legal actions then listl comprehend their q_value to return the max
+        actions = Nim.available_actions(state)
+        if not actions:
+            return 0
+        
+        rewards = [self.get_q_value(state, action) for action in actions]
+        best_reward = max(rewards)
 
         for (i, j) in self.q:
             if i == state:
