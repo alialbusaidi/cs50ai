@@ -140,6 +140,8 @@ class NimAI():
         
         rewards = [self.get_q_value(state, action) for action in actions]
         best_reward = max(rewards)
+        
+        return best_reward
 
 
     def choose_action(self, state, epsilon=True):
