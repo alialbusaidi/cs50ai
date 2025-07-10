@@ -58,8 +58,17 @@ def load_data(data_dir):
     be a list of integer labels, representing the categories for each of the
     corresponding `images`.
     """
-    raise NotImplementedError
+    # initialize empty lists images, and labels
+    
+    # loop i from 0 to NUM_CATEGORIES - 1
+        # for each image inside data_dir/i/*
+            # use cv2 to read image as numpy.ndarray (np multi-d array)
+                # here, use os.sep and os.path.join
+            # resize image to have width IMG_WIDTH and height IMG_HEIGHT
+            # append image in images list
+            # append i as label to labels list
 
+    # return tuple of lists (images, labels)
 
 def get_model():
     """
