@@ -59,17 +59,28 @@ def load_data(data_dir):
     corresponding `images`.
     """
     # initialize empty lists images, and labels
+    images = list()
+    labels = list()
     
     # loop i from 0 to NUM_CATEGORIES - 1
+    for i in range(NUM_CATEGORIES - 1):
         # for each image inside data_dir/i/*
+        path = os.path.join(data_dir, str(i))
+        files = os.listdir(path)
+        for file in files:
+            image_path = os.path.join(path, file)
             # use cv2 to read image as numpy.ndarray (np multi-d array)
-                # here, use os.sep and os.path.join
-            # resize image to have width IMG_WIDTH and height IMG_HEIGHT
+            image_array = cv2.imread(image_path)
+            if image_array is not None:
+                # resize image to have width IMG_WIDTH and height IMG_HEIGHT
+                resized_image = cv2.resize(image_array, (IMG_WIDTH, IMG_HEIGHT))
             # append image in images list
+            images.append(resized_image)
             # append i as label to labels list
+            labels.append(i)
 
     # return tuple of lists (images, labels)
-    raise NotImplementedError
+    return (images, labels)
 
 def get_model():
     """
