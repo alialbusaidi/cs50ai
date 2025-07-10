@@ -69,6 +69,7 @@ def load_data(data_dir):
             # append i as label to labels list
 
     # return tuple of lists (images, labels)
+    raise NotImplementedError
 
 def get_model():
     """
