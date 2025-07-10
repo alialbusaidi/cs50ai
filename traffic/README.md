@@ -1,0 +1,1 @@
+I started by outlining the logic of load_data in psudocode script.  
