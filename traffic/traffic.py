@@ -12,7 +12,7 @@ from sklearn.model_selection import train_test_split
 EPOCHS = 10
 IMG_WIDTH = 30
 IMG_HEIGHT = 30
-NUM_CATEGORIES = 3
+NUM_CATEGORIES = 43
 TEST_SIZE = 0.4
 
 
@@ -101,17 +101,17 @@ def get_model():
 
     # A convolutional layer, using filters and 3x3 kernel
     model.add(tf.keras.layers.Conv2D(
-      64, (3, 3), activation="relu", input_shape=(IMG_WIDTH, IMG_HEIGHT, 3)
+      128, (5, 5), activation="relu", input_shape=(IMG_WIDTH, IMG_HEIGHT, 3)
     ))
 
     # Layer implementing Max-pooling, using 2x2 pooling size
-    model.add(tf.keras.layers.MaxPooling2D(pool_size=(2, 2)))
+    model.add(tf.keras.layers.MaxPooling2D(pool_size=(3, 3)))
 
     # A layer to flatten the input from 3D to 1D
     model.add(tf.keras.layers.Flatten())
 
     # A hidden layer
-    model.add(tf.keras.layers.Dense(64, activation="relu"))
+    model.add(tf.keras.layers.Dense(256, activation="relu"))
     model.add(tf.keras.layers.Dropout(0.5))
 
     # This would be the output layer, containing NUM_CATEGORIES nodes

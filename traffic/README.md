@@ -16,3 +16,5 @@ Then I added a MaxPooling layer, which also didn't seem to make much difference.
 After adding a hidden layer with 16-128 nodes, and also changing the output activiation function from "Relu" to "Softmax" (and understanding why), the accuracy made significant improvement in accuracy. 
 
 FInally I added dropout to guard against overfitting. 
+
+However, after using the bigger dataset, I got bad accuracy results. Then I tweaked parameters, layers, sizes, and nodes, until I evantually reached a testing accuracy of 93%.
