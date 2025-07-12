@@ -95,12 +95,16 @@ def get_model():
     # Determine parameters/layers of the model 
     # Start with minimal layers then test
 
+    # Create sequential (multiple layers) model object
     model = tf.keras.models.Sequential()
 
+    # A layer to flatten the input from 3D to 1D
     model.add(tf.keras.layers.Flatten())
+
+    # This would be the output layer, containing NUM_CATEGORIES nodes
     model.add(tf.keras.layers.Dense(NUM_CATEGORIES, activation="relu"))
 
-
+    # Compile the model before training and evaluation, using desired metrics and parameters
     model.compile(
         optimizer="adam",
         loss="categorical_crossentropy",
