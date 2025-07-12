@@ -1,5 +1,6 @@
 import cv2
 from keras import activations
+from keras.layers import MaxPooling2D
 import numpy as np
 import os
 import sys
@@ -98,11 +99,23 @@ def get_model():
     # Create sequential (multiple layers) model object
     model = tf.keras.models.Sequential()
 
+    # A convolutional layer, using filters and 3x3 kernel
+    model.add(tf.keras.layers.Conv2D(
+      64, (3, 3), activation="relu", input_shape=(IMG_WIDTH, IMG_HEIGHT, 3)
+    ))
+
+    # Layer implementing Max-pooling, using 2x2 pooling size
+    model.add(tf.keras.layers.MaxPooling2D(pool_size=(2, 2)))
+
     # A layer to flatten the input from 3D to 1D
     model.add(tf.keras.layers.Flatten())
 
+    # A hidden layer
+    model.add(tf.keras.layers.Dense(64, activation="relu"))
+    model.add(tf.keras.layers.Dropout(0.5))
+
     # This would be the output layer, containing NUM_CATEGORIES nodes
-    model.add(tf.keras.layers.Dense(NUM_CATEGORIES, activation="relu"))
+    model.add(tf.keras.layers.Dense(NUM_CATEGORIES, activation="softmax"))
 
     # Compile the model before training and evaluation, using desired metrics and parameters
     model.compile(
