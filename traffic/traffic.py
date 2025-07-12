@@ -1,7 +1,9 @@
 import cv2
+from keras import activations
 import numpy as np
 import os
 import sys
+from scipy import optimize
 import tensorflow as tf
 
 from sklearn.model_selection import train_test_split
@@ -9,7 +11,7 @@ from sklearn.model_selection import train_test_split
 EPOCHS = 10
 IMG_WIDTH = 30
 IMG_HEIGHT = 30
-NUM_CATEGORIES = 43
+NUM_CATEGORIES = 3
 TEST_SIZE = 0.4
 
 
@@ -63,7 +65,7 @@ def load_data(data_dir):
     labels = list()
     
     # loop i from 0 to NUM_CATEGORIES - 1
-    for i in range(NUM_CATEGORIES - 1):
+    for i in range(NUM_CATEGORIES):
         # for each image inside data_dir/i/*
         path = os.path.join(data_dir, str(i))
         files = os.listdir(path)
@@ -92,7 +94,18 @@ def get_model():
     # Create a variable to store model
     # Determine parameters/layers of the model 
     # Start with minimal layers then test
+
     model = tf.keras.models.Sequential()
+
+    model.add(tf.keras.layers.Flatten())
+    model.add(tf.keras.layers.Dense(NUM_CATEGORIES, activation="relu"))
+
+
+    model.compile(
+        optimizer="adam",
+        loss="categorical_crossentropy",
+        metrics=["accuracy"]
+    )
 
     return model
 
