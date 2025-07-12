@@ -88,7 +88,15 @@ def get_model():
     `input_shape` of the first layer is `(IMG_WIDTH, IMG_HEIGHT, 3)`.
     The output layer should have `NUM_CATEGORIES` units, one for each category.
     """
-    raise NotImplementedError
+    
+    # Create a variable to store model
+    # Determine parameters/layers of the model 
+    # Start with minimal layers then test
+    model = tf.keras.models.Sequential()
+
+    return model
+
+
 
 
 if __name__ == "__main__":
