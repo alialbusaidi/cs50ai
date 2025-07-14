@@ -1,6 +1,6 @@
 */__pycache__/
 *venv/
-*traffic/gtsrb/
+gtsrb*
 .DS_Store
 sandbox.py
 /.vscode
