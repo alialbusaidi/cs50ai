@@ -1,5 +1,3 @@
-from nltk.tokenize import word_tokenize
+from parser import preprocess
 
-s = "This is a sentence"
-words = word_tokenize(s)
-print(words)
+print(preprocess("ThIs A Sentence!"))

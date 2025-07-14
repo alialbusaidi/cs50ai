@@ -1,5 +1,6 @@
 import nltk
 import sys
+from nltk.tokenize import word_tokenize
 
 TERMINALS = """
 Adj -> "country" | "dreadful" | "enigmatical" | "little" | "moist" | "red"
@@ -15,7 +16,7 @@ V -> "smiled" | "tell" | "were"
 """
 
 NONTERMINALS = """
-S -> N V
+S -> NP 
 """
 
 grammar = nltk.CFG.fromstring(NONTERMINALS + TERMINALS)
@@ -62,7 +63,21 @@ def preprocess(sentence):
     and removing any word that does not contain at least one alphabetic
     character.
     """
-    raise NotImplementedError
+    # Use word_tokenize to create list of words, and store in temp variable
+    words = word_tokenize(sentence)
+
+    word_list = list()
+
+    # Iterate over all words/characters in list and:
+    for word in words:
+        # exclude nonalphabets
+        if word.isalpha():
+        # lowecase them, and add to list
+            word_list.append(word.lower())
+
+    # return resultant list
+    return word_list
+
 
 
 def np_chunk(tree):
@@ -72,7 +87,8 @@ def np_chunk(tree):
     whose label is "NP" that does not itself contain any other
     noun phrases as subtrees.
     """
-    raise NotImplementedError
+    # Temporarily return an empty list for testing purpose
+    return list()
 
 
 if __name__ == "__main__":
