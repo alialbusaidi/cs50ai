@@ -90,9 +90,19 @@ def np_chunk(tree):
     whose label is "NP" that does not itself contain any other
     noun phrases as subtrees.
     """
-    # Temporarily return an empty list for testing purpose
-    return list()
+    chunks = list()
+    for sub in tree.subtrees(lambda t: t.label() == "NP"):
+        # Check if this NP contains any other NP subtrees (excluding itself)
+        has_nested_np = False
+        for child in sub.subtrees():
+            if child != sub and child.label() == "NP":
+                has_nested_np = True
+                break
+        
+        if not has_nested_np:
+            chunks.append(sub)
 
+    return chunks
 
 if __name__ == "__main__":
     main()
