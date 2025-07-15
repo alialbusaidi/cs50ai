@@ -16,13 +16,15 @@ V -> "smiled" | "tell" | "were"
 """
 
 NONTERMINALS = """
-S -> N | N V | N V NP | N V NP P N
-NP -> N | Det N
+S -> NP VP | VP NP | SS
+SS -> S Conj S
+NP -> N | Det N | Det Adj N | Det Adj Adj N | Det Adj Adj Adj N | NP Conj NP | PP
+VP -> V | Adv V | V Adv | V PP | V NP | Adv V NP
+PP -> P NP | NP P NP | P NP Adv
 """
 
 grammar = nltk.CFG.fromstring(NONTERMINALS + TERMINALS)
 parser = nltk.ChartParser(grammar)
-
 
 def main():
 
