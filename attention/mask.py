@@ -45,8 +45,16 @@ def get_mask_token_index(mask_token_id, inputs):
     Return the index of the token with the specified `mask_token_id`, or
     `None` if not present in the `inputs`.
     """
-    # TODO: Implement this function using regex, or transformers
-    raise NotImplementedError
+    # TODO: Implement this function
+    # assuming all words in inputs's ids can be accessed using inputs['input_ids]
+
+    # First, check in mask token id is in the list of input_ids
+    if mask_token_id in inputs['input_ids']:
+        # return the index of the inptut in the list
+        pass
+
+    # Otherwise, return None
+    return None
 
 
 
