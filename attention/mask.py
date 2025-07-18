@@ -63,6 +63,9 @@ def get_color_for_attention_score(attention_score):
     Return a tuple of three integers representing a shade of gray for the
     given `attention_score`. Each value should be in the range [0, 255].
     """
+    # Convert tensorflow score to float
+    attention_score = float(attention_score.numpy())
+
     # Assuming attention_score is a float between 0-1
     pixel = int(round(attention_score * 255))
 
